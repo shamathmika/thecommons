@@ -20,12 +20,12 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd frontend/marketplace
+          cd frontend
           npm install
 
       - name: Build React App
         run: |
-          cd frontend/marketplace
+          cd frontend
           npm run build
 
       - name: Sync files
@@ -34,5 +34,5 @@ jobs:
           server: ftpupload.net
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./frontend/marketplace/dist/
+          local-dir: ./frontend/dist/
           server-dir: /htdocs/
