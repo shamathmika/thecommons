@@ -12,7 +12,11 @@ $ch = curl_init($remoteUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_TIMEOUT, 8);
 
-// If HTTPS has issues, uncomment these two lines (only if needed):
+// Make the request look like a normal browser (some hosts block "weird" clients)
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36');
+
+// If HTTPS has issues, you *can* relax SSL checks (uncomment if needed for class project only):
 // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
@@ -22,8 +26,9 @@ $curlError = curl_error($ch);
 
 curl_close($ch);
 
-// If cURL failed or remote returned non-200, send a safe error/empty array
-if ($curlError || $httpCode !== 200 || !$response) {
+// Only treat it as an error if cURL failed or response is empty.
+// Some hosts may return non-200 codes even when they send usable JSON.
+if ($curlError || !$response) {
     http_response_code(502);
     echo json_encode([
         'error'   => 'Failed to fetch Whisk menu from company API',
@@ -33,9 +38,11 @@ if ($curlError || $httpCode !== 200 || !$response) {
     exit;
 }
 
-// Validate JSON
+// Try to decode JSON
 $data = json_decode($response, true);
+
 if (!is_array($data)) {
+    // If the body wasn't valid JSON, just return an empty array so frontend doesn't crash
     echo json_encode([], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     exit;
 }
