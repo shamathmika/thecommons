@@ -1,0 +1,121 @@
+/* ProductCard.css */
+/* Uses ONLY pixel theme variables from global.css */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--paper-bg);
+  border: 4px solid var(--wood-dark);
+  box-shadow: var(--pixel-shadow);
+  padding: 1.25rem;
+  margin: 0.5rem;
+  color: var(--text-color);
+}
+
+/* Image area */
+.product-card-image-wrapper {
+  border: 4px solid var(--wood-dark);
+  background-color: var(--wood-cream);
+  margin-bottom: 1rem;
+  height: 180px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: auto;
+}
+
+/* Body */
+.product-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Header row: title + company tag */
+.product-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.product-card-title {
+  margin: 0;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+
+/* little ribbon/tag for company name */
+.product-card-company-tag {
+  font-size: 0.9rem;
+  padding: 0.1rem 0.4rem;
+  background-color: var(--wood-light);
+  color: #fff;
+  border: 2px solid var(--wood-dark);
+}
+
+/* Subrow: type + price */
+.product-card-subrow {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.product-card-type {
+  background-color: var(--paper-bg);
+  padding: 0.1rem 0.4rem;
+  border: 2px solid var(--paper-border);
+}
+
+.product-card-price {
+  font-weight: 700;
+}
+
+/* Description */
+.product-card-description {
+  margin: 0.4rem 0 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  max-height: 3.9rem; /* ~3 lines */
+  overflow: hidden;
+}
+
+/* Meta row: rating + visits */
+.product-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.product-card-rating {
+  background-color: var(--wood-cream);
+  padding: 0.15rem 0.4rem;
+  border: 2px solid var(--wood-dark);
+}
+
+.product-card-visits {
+  opacity: 0.8;
+}
+
+/* Small responsiveness tweak */
+@media (max-width: 600px) {
+  .product-card {
+    padding: 1rem;
+  }
+
+  .product-card-image-wrapper {
+    height: 160px;
+  }
+}
