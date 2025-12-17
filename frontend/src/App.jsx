@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Login from './pages/Login';
 import Nestly from "./pages/Nestly";
+import Whisk from "./pages/Whisk";
 
 import './styles/global.css'; 
 import './styles/Home.css'; 
