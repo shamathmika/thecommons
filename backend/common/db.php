@@ -1,24 +1,29 @@
 <?php
-// common/db.php
-// Database connection template
+// backend/common/db.php
 
-$host = 'localhost'; // Change for production
-$db   = 'the_commons_db';
-$user = 'root'; 
-$pass = ''; 
+require_once __DIR__ . '/env.php';
+
+// Load from env
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$db = $_ENV['DB_NAME'] ?? '';
+$user = $_ENV['DB_USER'] ?? '';
+$pass = $_ENV['DB_PASS'] ?? '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
 $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
 try {
-    // $pdo = new PDO($dsn, $user, $pass, $options);
-    // echo "Connected successfully";
+    $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-    // throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode(['error' => 'Database connection failed']);
+    exit;
 }
 ?>
