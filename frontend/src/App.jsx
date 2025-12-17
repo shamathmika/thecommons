@@ -78,8 +78,8 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             <Route path="/nestly" element={<Nestly />} />
-
-            <Route path="/whisk" element={<div style={{padding: '2rem'}}>Whisk Page Coming Soon</div>} />
+            <Route path="/whisk" element={<Whisk />} />
+            
             <Route path="/petsit" element={<div style={{padding: '2rem'}}>PetSitHub Page Coming Soon</div>} />
           </Routes>
         </div>
