@@ -1,16 +1,30 @@
-name: Deploy to InfinityFree
+name: Deploy to InfinityFree (Matrix)
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  web-deploy:
-    name: Deploy
+  deploy:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        site:
+          - name: "1"
+            server: ftpupload.net
+            username: ${{ secrets.FTP_USERNAME }}
+            password: ${{ secrets.FTP_PASSWORD }}
+            path: /htdocs/
+
+          - name: "2"
+            server: ftpupload.net
+            username: ${{ secrets.FTP_USERNAME2 }}
+            password: ${{ secrets.FTP_PASSWORD2 }}
+            path: /the-commons.infinityfreeapp.com/htdocs/
+
     steps:
-      - name: Get latest code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -18,21 +32,22 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install Dependencies
+      - name: Install deps
         run: |
           cd frontend
           npm install
 
-      - name: Build React App
+      - name: Build frontend
         run: |
           cd frontend
           npm run build
 
-      - name: Sync files
+      - name: Deploy to FTP - ${{ matrix.site.name }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ftpupload.net
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ matrix.site.server }}
+          username: ${{ matrix.site.username }}
+          password: ${{ matrix.site.password }}
           local-dir: ./frontend/dist/
-          server-dir: /htdocs/
+          server-dir: ${{ matrix.site.path }}
+          dangerous-clean-slate: true
