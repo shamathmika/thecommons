@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Nestly from "./pages/Nestly";
 import Whisk from "./pages/Whisk";
+import WhiskDetail from "./pages/WhiskDetail";
 
 import './styles/global.css'; 
 import './styles/Home.css'; 
@@ -80,6 +81,7 @@ function App() {
 
             <Route path="/nestly" element={<Nestly />} />
             <Route path="/whisk" element={<Whisk />} />
+            <Route path="/whisk/:id" element={<WhiskDetail />} />
             
             <Route path="/petsit" element={<div style={{padding: '2rem'}}>PetSitHub Page Coming Soon</div>} />
           </Routes>
