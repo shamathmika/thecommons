@@ -47,115 +47,115 @@ if ($curlError || !$response) {
 if ($useFallback) {
     $data = [
         [
-            "id" => "W1",
-            "company" => "whisk",
-            "name" => "Fig & Honey Cheesecake",
-            "type" => "dessert",
-            "price" => 7.00,
-            "rating" => 4.9,
-            "visits" => 104,
-            "image" => "https://wendynttn.com/images/products/fig-honey-cheesecake.jpg",
-            "description" => "Silky cheesecake topped with roasted figs and local honey."
-        ],
-        [
-            "id" => "W2",
-            "company" => "whisk",
-            "name" => "Pear Cardamom Mini Cake",
-            "type" => "dessert",
-            "price" => 6.50,
-            "rating" => 4.8,
-            "visits" => 92,
-            "image" => "https://wendynttn.com/images/products/pear-cardamom-cake.jpg",
-            "description" => "Delicate mini cake with poached pear and warm cardamom."
-        ],
-        [
-            "id" => "W3",
-            "company" => "whisk",
-            "name" => "Cranberry Pistachio Cookie",
-            "type" => "dessert",
-            "price" => 3.75,
-            "rating" => 4.7,
-            "visits" => 88,
-            "image" => "https://wendynttn.com/images/products/cranberry-pistachio-cookie.jpg",
-            "description" => "Chewy cookie with tart cranberries and toasted pistachios."
-        ],
-        [
-            "id" => "W4",
-            "company" => "whisk",
-            "name" => "Brown Butter Chocolate Chip Cookie",
-            "type" => "dessert",
-            "price" => 3.95,
-            "rating" => 4.9,
-            "visits" => 110,
-            "image" => "https://wendynttn.com/images/products/brown-butter-ccc.jpg",
-            "description" => "Toasty brown butter cookie with puddles of dark chocolate."
-        ],
-        [
-            "id" => "W5",
-            "company" => "whisk",
-            "name" => "Lemon Olive Oil Mini Cake",
-            "type" => "dessert",
-            "price" => 6.00,
-            "rating" => 4.6,
-            "visits" => 80,
-            "image" => "https://wendynttn.com/images/products/lemon-olive-oil-cake.jpg",
-            "description" => "Bright, moist cake with citrus zest and fruity olive oil."
-        ],
-        [
-            "id" => "W6",
-            "company" => "whisk",
-            "name" => "Classic Vanilla Bean Cheesecake",
-            "type" => "dessert",
-            "price" => 7.25,
-            "rating" => 4.8,
-            "visits" => 95,
-            "image" => "https://wendynttn.com/images/products/vanilla-bean-cheesecake.jpg",
-            "description" => "Velvety cheesecake with real vanilla bean and buttery crust."
-        ],
-        [
-            "id" => "W7",
-            "company" => "whisk",
-            "name" => "Dark Chocolate Cheesecake",
-            "type" => "dessert",
-            "price" => 7.50,
-            "rating" => 4.9,
-            "visits" => 90,
-            "image" => "https://wendynttn.com/images/products/dark-chocolate-cheesecake.jpg",
-            "description" => "Rich cocoa crust and bittersweet chocolate filling."
-        ],
-        [
-            "id" => "W8",
-            "company" => "whisk",
-            "name" => "Coffee Cake",
-            "type" => "dessert",
-            "price" => 5.50,
-            "rating" => 4.5,
-            "visits" => 70,
-            "image" => "https://wendynttn.com/images/products/coffee-cake.jpg",
-            "description" => "Tender sour cream cake with cinnamon crumble topping."
-        ],
-        [
-            "id" => "W9",
-            "company" => "whisk",
-            "name" => "Butter Croissant",
-            "type" => "dessert",
-            "price" => 3.25,
-            "rating" => 4.6,
-            "visits" => 60,
-            "image" => "https://wendynttn.com/images/products/butter-croissant.jpg",
-            "description" => "Flaky, layered croissant with a slow-fermented dough."
-        ],
-        [
-            "id" => "W10",
-            "company" => "whisk",
-            "name" => "Macaron Box (6 pieces)",
-            "type" => "dessert",
-            "price" => 12.00,
-            "rating" => 4.8,
-            "visits" => 85,
-            "image" => "https://wendynttn.com/images/products/macaron-box.jpg",
-            "description" => "Assorted seasonal macarons with jam, ganache, and curds."
-        ],
+        "id"          => "W1",
+        "company"     => "whisk",
+        "name"        => "Coffee Cake",
+        "type"        => "dessert",
+        "price"       => 40.00,
+        "rating"      => 4.7,
+        "visits"      => 95,
+        "image"       => "https://wendynttn.com/images/products/coffee-cake.jpg",
+        "description" => "Velvety coffee-based and walnut sponge with cappuccino whipped cream frosting."
+    ],
+    [
+        "id"          => "W2",
+        "company"     => "whisk",
+        "name"        => "Chocolate Cupcake",
+        "type"        => "dessert",
+        "price"       => 5.50,
+        "rating"      => 4.8,
+        "visits"      => 120,
+        "image"       => "https://wendynttn.com/images/products/chocolate-cupcake.jpg",
+        "description" => "Moist chocolate cupcake topped with silky cocoa buttercream and sprinkles."
+    ],
+    [
+        "id"          => "W3",
+        "company"     => "whisk",
+        "name"        => "Vanilla Cupcake",
+        "type"        => "dessert",
+        "price"       => 5.50,
+        "rating"      => 4.6,
+        "visits"      => 88,
+        "image"       => "https://wendynttn.com/images/products/vanilla-cupcake.jpg",
+        "description" => "Classic vanilla cupcake with Madagascar vanilla bean frosting."
+    ],
+    [
+        "id"          => "W4",
+        "company"     => "whisk",
+        "name"        => "Red Velvet Cake",
+        "type"        => "dessert",
+        "price"       => 48.00,
+        "rating"      => 4.9,
+        "visits"      => 110,
+        "image"       => "https://wendynttn.com/images/products/red-velvet-cake.jpg",
+        "description" => "Elegant layers of crimson sponge and cream cheese frosting."
+    ],
+    [
+        "id"          => "W5",
+        "company"     => "whisk",
+        "name"        => "Lemon Tart",
+        "type"        => "dessert",
+        "price"       => 6.00,
+        "rating"      => 4.7,
+        "visits"      => 78,
+        "image"       => "https://wendynttn.com/images/products/lemon-tart.jpg",
+        "description" => "Buttery crust filled with bright, zesty lemon curd."
+    ],
+    [
+        "id"          => "W6",
+        "company"     => "whisk",
+        "name"        => "Blueberry Cheesecake",
+        "type"        => "dessert",
+        "price"       => 45.0,
+        "rating"      => 4.8,
+        "visits"      => 102,
+        "image"       => "https://wendynttn.com/images/products/blueberry-cheesecake.jpg",
+        "description" => "Non-baked cheesecake bursting with fresh blueberries."
+    ],
+    [
+        "id"          => "W7",
+        "company"     => "whisk",
+        "name"        => "Butter Croissant",
+        "type"        => "pastry",
+        "price"       => 3.50,
+        "rating"      => 4.5,
+        "visits"      => 90,
+        "image"       => "https://wendynttn.com/images/products/croissant.jpg",
+        "description" => "Flaky, buttery layers baked golden every morning."
+    ],
+    [
+        "id"          => "W8",
+        "company"     => "whisk",
+        "name"        => "Macaron Box (6 pc)",
+        "type"        => "dessert",
+        "price"       => 18.00,
+        "rating"      => 4.9,
+        "visits"      => 98,
+        "image"       => "https://wendynttn.com/images/products/macaron-box.jpg",
+        "description" => "Assorted French macarons with seasonal flavors."
+    ],
+    [
+        "id"          => "W9",
+        "company"     => "whisk",
+        "name"        => "Banana Bread",
+        "type"        => "dessert",
+        "price"       => 10.00,
+        "rating"      => 4.6,
+        "visits"      => 85,
+        "image"       => "https://wendynttn.com/images/products/banana-bread.jpg",
+        "description" => "Tender loaf made with ripe bananas and toasted walnuts."
+    ],
+    [
+        "id"          => "W10",
+        "company"     => "whisk",
+        "name"        => "Fig & Honey Cheesecake",
+        "type"        => "dessert",
+        "price"       => 45.00,
+        "rating"      => 4.9,
+        "visits"      => 99,
+        "image"       => "https://wendynttn.com/images/products/fig-honey-cheesecake.jpg",
+        "description" => "Silky, lightly sweet cheesecake with roasted figs on top."
+    ],
     ];
 }
 
