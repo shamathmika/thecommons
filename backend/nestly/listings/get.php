@@ -1,6 +1,6 @@
 <?php
 // backend/nestly/listings/get.php
-require_once __DIR__ . '/../../../common/cors.php';
+require_once __DIR__ . '/../../common/cors.php';
 
 // Proxies Nestly's listings API and normalizes it to The Commons product format.
 header('Content-Type: application/json; charset=utf-8');
