@@ -1,12 +1,73 @@
 <?php
-// marketplace/tracking.php
+// backend/marketplace/tracking.php
+// Main endpoint to track user visits across all companies
+
 require_once __DIR__ . '/../common/cors.php';
-// Visit tracking across all domains
+require_once __DIR__ . '/../db.php';
 
-header('Content-Type: application/json');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Logic to track user visits
-// e.g., insert into visits table
+header('Content-Type: application/json; charset=utf-8');
 
-echo json_encode(['status' => 'success', 'message' => 'Visit tracked']);
+// Read JSON body (what React will usually send)
+$rawBody = file_get_contents('php://input');
+$data = json_decode($rawBody, true);
+
+// Fallback to form POST if not JSON
+if (!$data) {
+    $data = $_POST;
+}
+
+$company   = trim($data['company']   ?? '');
+$productId = trim($data['productId'] ?? '');
+
+// Basic validation
+if ($company === '' || $productId === '') {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'error'   => 'company and productId are required',
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+// If login sets a user id in the session, capture it; otherwise NULL
+$userId = $_SESSION['user_id'] ?? null;
+
+// Insert into visits table
+$stmt = $conn->prepare("
+    INSERT INTO visits (user_id, company, product_id)
+    VALUES (?, ?, ?)
+");
+
+if (!$stmt) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error'   => 'Failed to prepare statement: ' . $conn->error,
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
+$stmt->bind_param('iss', $userId, $company, $productId);
+$ok = $stmt->execute();
+
+if (!$ok) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error'   => 'Failed to insert visit: ' . $stmt->error,
+    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    $stmt->close();
+    exit;
+}
+
+$stmt->close();
+
+echo json_encode([
+    'success' => true,
+    'message' => 'Visit tracked',
+], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ?>
