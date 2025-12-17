@@ -1,0 +1,93 @@
+/* frontend/src/styles/Home.css */
+.home-container {
+  text-align: center;
+  padding-bottom: 3rem;
+  min-height: calc(100vh - 80px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.village-sign {
+  background-color: var(--wood-cream);
+  max-width: 600px;
+  margin: 3rem auto 5rem auto; /* Increased top margin from 0 to 3rem, bottom from 3rem to 5rem */
+  transform: rotate(-1deg);
+}
+
+.village-sign h2 {
+  font-size: 3rem;
+  margin: 0;
+  color: var(--wood-dark);
+}
+
+.village-sign p {
+  font-size: 1.4rem;
+}
+
+.map-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+  /* background-image: radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px); */
+  background-size: 20px 20px;
+  border-radius: 20px;
+  /* border: 4px dashed rgba(111, 78, 55, 0.3); */
+  min-height: 400px;
+}
+
+.map-building {
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Specific margins for buildings to stagger them */
+.map-building-whisk {
+  margin-bottom: 40px;
+}
+
+.building-wrapper {
+  position: relative;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.building-img {
+  width: 200px; /* Default width */
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+}
+
+.building-img-whisk {
+  width: 220px;
+}
+
+.building-img-petsit {
+  width: 180px;
+}
+
+.visit-btn {
+  margin-top: 1rem;
+  display: block;
+}
+
+.road-path {
+  height: 40px;
+  background: #d2b48c;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(10px);
+  margin-top: -50px;
+  z-index: -1;
+}
+
+/* App container */
+.app-wrapper {
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
