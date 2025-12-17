@@ -1,0 +1,36 @@
+/* frontend/src/styles/Header.css */
+.header-container {
+  background-color: var(--wood-dark);
+  color: var(--wood-cream);
+  padding: 1rem 2rem;
+  border-bottom: 4px solid var(--wood-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+  width: 100%;
+}
+
+.header-title-container {
+  margin: 0;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.header-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.user-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-btn {
+  font-size: 1rem;
+  padding: 5px 10px;
+  background-color: #d32f2f;
+}

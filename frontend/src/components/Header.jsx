@@ -1,36 +1,30 @@
 // src/components/Header.jsx
-import React from "react";
-import { useAuth } from "../context/AuthContext";
+import React from 'react';
+import { useAuth } from '../context/AuthContext';
+import '../styles/Header.css';
 
 function Header() {
   const { user, logout } = useAuth();
 
   const handleLoginRedirect = () => {
-    // You can switch this to React Router later if you want
-    window.location.href = "/login";
+    window.location.href = '/login';
   };
 
   return (
-    <header
-      style={{
-        padding: "1rem",
-        borderBottom: "1px solid #ccc",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <h1>The Commons</h1>
+    <header className="header-container">
+      <h1 className="header-title-container">
+        <a href="/" className="header-link">The Commons</a>
+      </h1>
       <nav>
         {user ? (
-          <div>
+          <div className="user-nav">
             <span>Welcome, {user.name}</span>
-            <button onClick={logout} style={{ marginLeft: "1rem" }}>
+            <button onClick={logout} className="pixel-btn logout-btn">
               Logout
             </button>
           </div>
         ) : (
-          <button onClick={handleLoginRedirect}>Login</button>
+          <button onClick={handleLoginRedirect} className="pixel-btn">Login</button>
         )}
       </nav>
     </header>

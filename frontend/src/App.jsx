@@ -4,40 +4,65 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Login from './pages/Login';
-import './App.css'; // Keep the CSS import if you want some base styles
+import './styles/global.css'; // Import global styles
+import './styles/Home.css'; // Import Home styles
 
-// Placeholder Home Component
+// Import assets
+import nestlyImg from './assets/nestly.png';
+import whiskImg from './assets/whisk.png';
+import petsitImg from './assets/petsithub.png';
+
 function Home() {
   return (
-    <div style={{ padding: '2rem', textAlign: 'center' }}>
-      <h2>Welcome to the Marketplace</h2>
-      <p>Explore listings from Nestly, Whisk, and PetSitHub.</p>
+    <div className="home-container">
       
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginTop: '2rem' }}>
-        <a href="/nestly" style={cardStyle}>Nestly (Housing)</a>
-        <a href="/whisk" style={cardStyle}>Whisk (Bakery)</a>
-        <a href="/petsit" style={cardStyle}>PetSitHub (Pets)</a>
+      {/* Village Sign */}
+      <div className="pixel-card village-sign">
+        <h2>The Village Map</h2>
+        <p>Select a destination to visit</p>
       </div>
+      
+      {/* Map Layout */}
+      <div className="map-layout">
+        
+        {/* Nestly House */}
+        <a href="/nestly" className="map-building">
+          <div className="building-wrapper">
+            <img src={nestlyImg} alt="Nestly House" className="building-img" />
+            <div className="pixel-btn visit-btn">Nestly</div>
+          </div>
+        </a>
+
+        {/* Whisk Bakery */}
+        <a href="/whisk" className="map-building map-building-whisk">
+          <div className="building-wrapper">
+             <img src={whiskImg} alt="Whisk Bakery" className="building-img building-img-whisk" />
+             <div className="pixel-btn visit-btn">Whisk</div>
+          </div>
+        </a>
+
+        {/* PetSitHub Kennel */}
+        <a href="/petsit" className="map-building">
+          <div className="building-wrapper">
+             <img src={petsitImg} alt="PetSitHub" className="building-img building-img-petsit" />
+             <div className="pixel-btn visit-btn">PetSitHub</div>
+          </div>
+        </a>
+
+      </div>
+      
+      {/* Decoration: Road/Path */}
+      <div className="road-path"></div>
+
     </div>
   );
 }
-
-const cardStyle = {
-  padding: '2rem',
-  border: '1px solid #ddd',
-  borderRadius: '8px',
-  textDecoration: 'none',
-  color: '#333',
-  fontWeight: 'bold',
-  display: 'block',
-  minWidth: '150px'
-};
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
+        <div className="app-wrapper">
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
