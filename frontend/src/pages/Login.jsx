@@ -47,6 +47,10 @@ function Login() {
     window.location.href = `${API_ROOT}/marketplace/auth/google-start.php`;
   };
 
+  const handleFacebookLogin = () => {
+    window.location.href = `${API_ROOT}/marketplace/auth/facebook-start.php`;
+  };
+
   return (
     <div
       style={{ maxWidth: "400px", margin: "2rem auto", textAlign: "center" }}
@@ -101,6 +105,13 @@ function Login() {
           style={{ backgroundColor: "#DB4437", color: "white" }}
         >
           Sign in with Google
+        </button>
+
+        <button
+          onClick={handleFacebookLogin}
+          style={{ backgroundColor: "#4267B2", color: "white" }}
+        >
+          Sign in with Facebook
         </button>
       </div>
 
