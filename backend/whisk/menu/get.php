@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../common/cors.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // This is your real Whisk API endpoint on your own site
-$remoteUrl = 'https://wendynttn.com/backend/whisk/menu/get.php';
+$remoteUrl = 'https://wendynttn.com/backend/whisk/products/list.php';
 
 // Call your company API using cURL
 $ch = curl_init($remoteUrl);
