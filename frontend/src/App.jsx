@@ -1,13 +1,15 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Login from './pages/Login';
-import './styles/global.css'; // Import global styles
-import './styles/Home.css'; // Import Home styles
+import Nestly from "./pages/Nestly";
 
-// Import assets
+import './styles/global.css'; 
+import './styles/Home.css'; 
+
+// pixel village images
 import nestlyImg from './assets/nestly.png';
 import whiskImg from './assets/whisk.png';
 import petsitImg from './assets/petsithub.png';
@@ -26,32 +28,39 @@ function Home() {
       <div className="map-layout">
         
         {/* Nestly House */}
-        <a href="/nestly" className="map-building">
+        <Link to="/nestly" className="map-building">
           <div className="building-wrapper">
             <img src={nestlyImg} alt="Nestly House" className="building-img" />
             <div className="pixel-btn visit-btn">Nestly</div>
           </div>
-        </a>
+        </Link>
 
         {/* Whisk Bakery */}
-        <a href="/whisk" className="map-building map-building-whisk">
+        <Link to="/whisk" className="map-building map-building-whisk">
           <div className="building-wrapper">
-             <img src={whiskImg} alt="Whisk Bakery" className="building-img building-img-whisk" />
-             <div className="pixel-btn visit-btn">Whisk</div>
+            <img 
+              src={whiskImg} 
+              alt="Whisk Bakery" 
+              className="building-img building-img-whisk" 
+            />
+            <div className="pixel-btn visit-btn">Whisk</div>
           </div>
-        </a>
+        </Link>
 
         {/* PetSitHub Kennel */}
-        <a href="/petsit" className="map-building">
+        <Link to="/petsit" className="map-building">
           <div className="building-wrapper">
-             <img src={petsitImg} alt="PetSitHub" className="building-img building-img-petsit" />
-             <div className="pixel-btn visit-btn">PetSitHub</div>
+            <img 
+              src={petsitImg} 
+              alt="PetSitHub" 
+              className="building-img building-img-petsit" 
+            />
+            <div className="pixel-btn visit-btn">PetSitHub</div>
           </div>
-        </a>
+        </Link>
 
       </div>
       
-      {/* Decoration: Road/Path */}
       <div className="road-path"></div>
 
     </div>
@@ -67,6 +76,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+
+            <Route path="/nestly" element={<Nestly />} />
+
+            <Route path="/whisk" element={<div style={{padding: '2rem'}}>Whisk Page Coming Soon</div>} />
+            <Route path="/petsit" element={<div style={{padding: '2rem'}}>PetSitHub Page Coming Soon</div>} />
           </Routes>
         </div>
       </Router>
