@@ -36,9 +36,26 @@ jobs:
           npm run build
 
       # ============================
-      # DEPLOY FOR SITE "1"
+      # DEPLOY BACKEND FOR SITE "1"
       # ============================
-      - name: Deploy to FTP site 1
+      - name: Deploy backend for site 1
+        if: matrix.site.name == '1'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftpupload.net
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./backend/
+          server-dir: ${{ matrix.site.path }}/backend
+          dangerous-clean-slate: false
+          exclude: |
+            .env
+            **/.env
+
+      # ============================
+      # DEPLOY FRONTEND FOR SITE "1"
+      # ============================
+      - name: Deploy frontend for site 1
         if: matrix.site.name == '1'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -47,12 +64,32 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./frontend/dist/
           server-dir: ${{ matrix.site.path }}
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
+          exclude: |
+            .env
+            **/.env
 
       # ============================
-      # DEPLOY FOR SITE "2"
+      # DEPLOY BACKEND FOR SITE "2"
       # ============================
-      - name: Deploy to FTP site 2
+      - name: Deploy backend for site 2
+        if: matrix.site.name == '2'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftpupload.net
+          username: ${{ secrets.FTP_USERNAME2 }}
+          password: ${{ secrets.FTP_PASSWORD2 }}
+          local-dir: ./backend/
+          server-dir: ${{ matrix.site.path }}/backend
+          dangerous-clean-slate: false
+          exclude: |
+            .env
+            **/.env
+
+      # ============================
+      # DEPLOY FRONTEND FOR SITE "2"
+      # ============================
+      - name: Deploy frontend for site 2
         if: matrix.site.name == '2'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -61,4 +98,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD2 }}
           local-dir: ./frontend/dist/
           server-dir: ${{ matrix.site.path }}
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
+          exclude: |
+            .env
+            **/.env
