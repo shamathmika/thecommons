@@ -390,3 +390,11 @@ html, body, #root {
 .app-content {
   flex: 1;
 }
+
+/* Show button in top-left on short screen */
+.short-screen-top-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+}
