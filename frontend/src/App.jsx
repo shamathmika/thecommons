@@ -132,7 +132,7 @@ function Home() {
               } else if (p.company === "nestly") {
                 detailLink = `/nestly/${encodeURIComponent(p.id)}`; // Assuming detail page exists or goes to list
               } else if (p.company === "petsit") {
-                detailLink = "/petsit";
+                detailLink = `/petsit/${encodeURIComponent(p.id)}`;
               }
 
               return (
@@ -169,14 +169,8 @@ function App() {
             <Route path="/whisk/:id" element={<ProductDetail />} />
             <Route path="/user/:id" element={<UserProfile />} />
 
-            <Route
-              path="/petsit"
-              element={
-                <div style={{ padding: "2rem" }}>
-                  PetSitHub Page Coming Soon
-                </div>
-              }
-            />
+            <Route path="/petsit" element={<CompanyPage company="petsit" />} />
+            <Route path="/petsit/:id" element={<ProductDetail />} />
           </Routes>
         </div>
       </Router>

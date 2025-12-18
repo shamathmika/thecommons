@@ -23,6 +23,37 @@ export default function ProductDetail() {
   const [reviewRating, setReviewRating] = useState(5);
   const [submittingReview, setSubmittingReview] = useState(false);
 
+  const [topProducts, setTopProducts] = useState([]);
+  const [loadingTop, setLoadingTop] = useState(false);
+  const [showTop5, setShowTop5] = useState(false);
+
+  const fetchTopProducts = async () => {
+    if (showTop5) {
+      setShowTop5(false);
+      return;
+    }
+    
+    setLoadingTop(true);
+    setShowTop5(true);
+    try {
+      const endpoint = isNestly 
+        ? `${apiBase}/nestly/listings/top.php` 
+        : isWhisk 
+          ? `${apiBase}/whisk/menu/top.php` 
+          : `${apiBase}/petsit/services/top.php`;
+          
+      const res = await fetch(endpoint);
+      if (res.ok) {
+        const data = await res.json();
+        setTopProducts(Array.isArray(data) ? data : []);
+      }
+    } catch (err) {
+      console.error("Failed to fetch top products", err);
+    } finally {
+      setLoadingTop(false);
+    }
+  };
+
   // Determine Type & Action based on ID
   const isNestly = id?.startsWith('N');
   const isWhisk = id?.startsWith('W');
@@ -246,7 +277,6 @@ export default function ProductDetail() {
            <span className={`pd-company-tag tag-${companyCode}`}>
              {companyName}
            </span>
-
         </div>
 
         {product.image && (
@@ -258,7 +288,6 @@ export default function ProductDetail() {
         <div className="pd-meta-row">
            <div className="pd-price">{priceDisplay}</div>
            <div className="pd-rating">
-              {/* Show stars based on rating */}
               <span style={{marginRight: '8px'}}>{Number(product.rating || 0).toFixed(1)}</span>
               <PixelStar />
            </div>
@@ -273,9 +302,14 @@ export default function ProductDetail() {
            {actionLabel}
         </button>
         
-        <Link to={backLink} style={{display:'block', textAlign:'center', marginTop:'1rem', color: 'var(--wood-light)'}}>
-          {backText}
-        </Link>
+        <div style={{display:'flex', justifyContent:'center', gap:'1rem', marginTop:'1.5rem', flexWrap:'wrap'}}>
+          <Link to={backLink} className="pixel-btn" style={{backgroundColor: 'var(--wood-dark)', fontSize: '0.9rem'}}>
+            {backText}
+          </Link>
+          <Link to={`${backLink}?filter=top`} className="pixel-btn" style={{fontSize: '0.9rem'}}>
+            View Top 5 {isNestly ? "Listings" : isWhisk ? "Menu Items" : "Services"}
+          </Link>
+        </div>
       </div>
 
       {/* RIGHT COLUMN: Reviews */}

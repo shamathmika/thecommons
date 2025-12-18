@@ -38,6 +38,10 @@ export default function CompanyPage({ company }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isTopFilter = searchParams.get('filter') === 'top';
+
   useEffect(() => {
     if (!config) return;
 
@@ -45,14 +49,16 @@ export default function CompanyPage({ company }) {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`${apiBase}${config.endpoint}`);
+        const endpoint = isTopFilter 
+          ? config.endpoint.replace('get.php', 'top.php')
+          : config.endpoint;
+
+        const res = await fetch(`${apiBase}${endpoint}`);
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}`);
         }
         const data = await res.json();
         
-        // Handle varying response structures if necessary, but ideally normalized by backend
-        // Nestly/Whisk get.php return array of objects.
         if (Array.isArray(data)) {
           setProducts(data);
         } else {
@@ -67,17 +73,34 @@ export default function CompanyPage({ company }) {
     }
 
     fetchProducts();
-  }, [company, config]);
+  }, [company, config, isTopFilter]);
 
   if (!config) return <div style={{padding:'2rem'}}>Unknown Company</div>;
 
+  const topLimitText = company === 'nestly' ? "Listings" : company === 'whisk' ? "Menu Items" : "Services";
+
   return (
     <div style={{ padding: "2rem" }} className={config.bgClass}>
-      <h2 className="pixel-font" style={{ marginBottom: "1rem" }}>
-        {config.title}
-      </h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+        <div>
+          <h2 className="pixel-font" style={{ margin: 0 }}>
+            {isTopFilter ? `Top 5 ${config.title}` : config.title}
+          </h2>
+          <p style={{ margin: '0.25rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
+            {isTopFilter ? "Based on community trends and ratings" : "The local selection"}
+          </p>
+        </div>
 
-      {loading && <p>Loading...</p>}
+        <Link 
+          to={isTopFilter ? `/${company}` : `/${company}?filter=top`} 
+          className="pixel-btn" 
+          style={{ fontSize: '0.9rem', minWidth: '150px', textAlign: 'center' }}
+        >
+          {isTopFilter ? "Show All Items" : `View Top 5 ${topLimitText}`}
+        </Link>
+      </div>
+
+      {loading && <p>Consulting the village records...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {!loading && !error && products.length === 0 && (
