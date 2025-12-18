@@ -6,7 +6,11 @@
   flex-direction: column;
   position: relative;
   /* User requested background color when scrolling */
-  background-color: #9AB261; 
+  background-color: #9AB261;
+  background-image: var(--grass-tiling);
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top center;
 }
 
 /* === Hero Section (Map/List) === */
@@ -205,7 +209,7 @@
   padding: 2rem 1.5rem 4rem;
   /* Ensure background color is visible/consistent if needed, 
      or transparent to show body/container bg */
-  background-color: rgba(255, 255, 255, 0.1); 
+  background-color: transparent; 
 }
 
 .top-title {
