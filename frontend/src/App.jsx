@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import CompanyPage from "./pages/CompanyPage";
 import ProductDetail from "./pages/ProductDetail";
+import UserProfile from "./pages/UserProfile";
 
 import "./styles/global.css";
 import "./styles/Home.css";
@@ -166,6 +167,7 @@ function App() {
 
             <Route path="/whisk" element={<CompanyPage company="whisk" />} />
             <Route path="/whisk/:id" element={<ProductDetail />} />
+            <Route path="/user/:id" element={<UserProfile />} />
 
             <Route
               path="/petsit"

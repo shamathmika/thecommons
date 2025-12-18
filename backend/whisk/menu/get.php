@@ -88,6 +88,7 @@ if (is_array($data)) {
             $localVisits = 0;
         }
         $item['visits'] = $localVisits;
+        $item['company'] = 'whisk';
 
         // 2. Local Reviews aggregate
         $localAvg = 0;

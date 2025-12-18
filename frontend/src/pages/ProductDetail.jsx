@@ -1,7 +1,7 @@
 // src/pages/ProductDetail.jsx
 import React, { useEffect, useState } from 'react';
 import PixelStar from '../components/PixelStar';
-
+import PixelTrash from '../components/PixelTrash';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/ProductDetail.css';
@@ -198,6 +198,25 @@ export default function ProductDetail() {
     }
   };
 
+  const handleDeleteReview = async (reviewId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+
+    try {
+      const res = await fetch(`${apiBase}/marketplace/reviews.php?id=${reviewId}&action=delete`, {
+        method: 'POST'
+      });
+
+      if (res.ok) {
+        fetchReviews();
+      } else {
+        alert("Failed to delete review");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting review");
+    }
+  };
+
   if (loading) return (
     <div className="product-detail-container">
        <div className="pixel-card"><p>Loading pixel data...</p></div>
@@ -303,10 +322,23 @@ export default function ProductDetail() {
             
             {reviews.map(review => (
                <div key={review.id} className="review-item">
-                  <span className="review-author">{review.author_name || 'Anonymous Citizen'}</span>
-                  {/* Format Date if possible, or just show raw */}
-                  <span className="review-date">{new Date(review.created_at).toLocaleDateString()}</span>
-                  <div style={{display:'flex', gap:'2px', marginBottom:'0.5rem'}}>
+                  <div className="review-header" style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start'}}>
+                    <div style={{display:'flex', flexDirection:'column'}}>
+                      <span className="review-author">{review.author_name || 'Anonymous Citizen'}</span>
+                      <span className="review-date">{new Date(review.created_at).toLocaleDateString()}</span>
+                    </div>
+
+                    {user && String(user.id) === String(review.user_id) && (
+                      <button 
+                        onClick={() => handleDeleteReview(review.id)}
+                        className="delete-review-btn"
+                        title="Delete this review"
+                      >
+                        <PixelTrash size={18} />
+                      </button>
+                    )}
+                  </div>
+                  <div style={{display:'flex', gap:'2px', marginBottom:'0.5rem', marginTop:'0.25rem'}}>
                      {[1,2,3,4,5].map(star => (
                         <PixelStar key={star} size={16} filled={star <= review.rating} />
                      ))}

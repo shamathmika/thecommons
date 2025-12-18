@@ -1,0 +1,134 @@
+.user-profile-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.profile-header-card {
+  text-align: center;
+  margin-bottom: 2rem;
+  border: 4px solid var(--wood-dark);
+}
+
+.profile-title {
+  margin-top: 0;
+  font-size: 2.5rem;
+  color: var(--wood-dark);
+}
+
+.profile-info {
+  font-size: 1.2rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stats-card, .actions-card {
+  padding: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px dashed var(--paper-border);
+}
+
+.stat-value {
+  font-weight: bold;
+  color: var(--grass-green);
+}
+
+.stat-note {
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.7;
+  text-align: center;
+}
+
+.action-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.user-reviews-list {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.user-review-item {
+  padding: 1rem;
+  background-color: #ffffff; /* Changed to White */
+  border: 4px solid var(--wood-dark); /* Thicker border for better contrast on white */
+  border-radius: 4px;
+}
+
+.user-review-product-link {
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--wood-dark);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.user-review-product-link:hover {
+  border-bottom-color: var(--wood-dark);
+}
+
+.user-review-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.user-review-product {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--wood-dark);
+}
+
+.user-review-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.user-review-comment {
+  margin: 0.5rem 0;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.user-review-date {
+  display: block;
+  text-align: right;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.no-data {
+  text-align: center;
+  opacity: 0.7;
+  padding: 1rem;
+}
+
+.pixel-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #999;
+}
