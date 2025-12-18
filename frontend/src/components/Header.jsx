@@ -10,6 +10,7 @@ function Header() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const companies = [
     { name: 'Nestly', path: '/nestly' },
@@ -39,7 +40,7 @@ function Header() {
             Companies <span className="dropdown-arrow">▼</span>
           </button>
           
-          <div className="dropdown-menu pixel-scroll">
+          <div className={`dropdown-menu pixel-scroll ${showDropdown ? 'show' : ''}`}>
             {companies.map((co) => (
               <Link 
                 key={co.path} 
@@ -50,6 +51,9 @@ function Header() {
                 {co.name}
               </Link>
             ))}
+            <Link to="/marketplace" className="dropdown-item all-products-link">
+              All Products & Services
+            </Link>
           </div>
         </div>
 
@@ -107,6 +111,13 @@ function Header() {
                   {co.name}
                 </Link>
               ))}
+              <Link 
+                to="/marketplace" 
+                className="mobile-menu-item all-products-mobile"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                All Products & Services
+              </Link>
             </div>
 
             <button 

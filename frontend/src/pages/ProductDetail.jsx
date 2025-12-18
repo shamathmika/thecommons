@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PixelStar from '../components/PixelStar';
 import PixelTrash from '../components/PixelTrash';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/ProductDetail.css';
 
@@ -12,6 +12,8 @@ export default function ProductDetail() {
   const { id } = useParams(); // e.g. "N1", "W5"
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromMarketplace = location.state?.fromMarketplace;
 
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -61,11 +63,11 @@ export default function ProductDetail() {
   
   const companyName = isNestly ? 'NESTLY' : isWhisk ? 'WHISK' : isPetsit ? 'PETSITHUB' : 'MARKETPLACE';
   const companyCode = isNestly ? 'nestly' : isWhisk ? 'whisk' : isPetsit ? 'petsit' : 'petsit';
-  const actionLabel = isNestly ? 'Book Now' : 'Buy Now';
+  const actionLabel = isWhisk ? 'Buy Now' : 'Book Now';
   
   // Back Link Logic
-  const backLink = isNestly ? '/nestly' : isWhisk ? '/whisk' : isPetsit ? '/petsit' : '/';
-  const backText = isNestly ? '← Back to Listings' : isWhisk ? '← Back to Menu' : isPetsit ? '← Back to Services' : '← Back to Village';
+  const backLink = fromMarketplace ? '/marketplace' : (isNestly ? '/nestly' : isWhisk ? '/whisk' : isPetsit ? '/petsit' : '/');
+  const backText = fromMarketplace ? '← Back to Marketplace' : (isNestly ? '← Back to Listings' : isWhisk ? '← Back to Menu' : isPetsit ? '← Back to Services' : '← Back to Village');
 
   useEffect(() => {
     if (!id) return;

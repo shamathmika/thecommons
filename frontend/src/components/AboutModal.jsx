@@ -9,8 +9,8 @@ const AboutModal = ({ isOpen, onClose }) => {
       <div className="about-modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="scroll-wrapper">
           <div className="scroll-text">
-            <h2 className="pixel-font">The Commons</h2>
-            <p>Your digital village for student living, artisanal treats, and pet care.</p>
+            <h2 className="pixel-font">Hello, Traveller</h2>
+            <p>Welcome to The Commons, your digital village for student living, artisanal treats, and pet care.</p>
             <ul className="pixel-list">
               <li><strong>Nestly:</strong> Student Housing</li>
               <li><strong>Whisk:</strong> Online Bakery</li>

@@ -79,6 +79,9 @@ function Home() {
         <div className="pixel-card village-sign">
           <h2>The Village Map</h2>
           <p>Select a destination to visit</p>
+          <Link to="/marketplace" className="pixel-btn view-all-btn">
+            See the Entire Marketplace
+          </Link>
         </div>
         
         {/* Interactive Spots */}
@@ -171,6 +174,8 @@ function App() {
 
             <Route path="/petsit" element={<CompanyPage company="petsit" />} />
             <Route path="/petsit/:id" element={<ProductDetail />} />
+
+            <Route path="/marketplace" element={<CompanyPage company="marketplace" />} />
           </Routes>
         </div>
       </Router>
