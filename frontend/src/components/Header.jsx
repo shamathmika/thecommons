@@ -7,7 +7,7 @@ import '../styles/Header.css';
 function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const companies = [
     { name: 'Nestly', path: '/nestly' },
@@ -15,14 +15,19 @@ function Header() {
     { name: 'PetSitHub', path: '/petsit' },
   ];
 
+  const firstName = user?.name ? user.name.split(' ')[0] : '';
+
   return (
     <header className="header-container">
       <h1 className="header-title-container">
-        <Link to="/" className="header-link">The Commons</Link>
+        <Link to="/" className="header-link" onClick={() => setIsMenuOpen(false)}>
+          <span className="desktop-title">The Commons</span>
+          <span className="mobile-title">TC</span>
+        </Link>
       </h1>
 
-      <nav className="header-nav">
-        {/* Companies Dropdown */}
+      {/* Desktop Nav */}
+      <nav className="header-nav desktop-only">
         <div 
           className="dropdown-container"
           onMouseEnter={() => setShowDropdown(true)}
@@ -59,6 +64,63 @@ function Header() {
           <button onClick={() => navigate('/login')} className="pixel-btn">Login</button>
         )}
       </nav>
+
+      {/* Mobile Burger Menu */}
+      <div className="mobile-only burger-wrapper">
+        <button 
+          className={`burger-icon ${isMenuOpen ? 'open' : ''}`} 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className="burger-bar"></span>
+          <span className="burger-bar"></span>
+          <span className="burger-bar"></span>
+        </button>
+
+        {isMenuOpen && (
+          <div className="mobile-menu-tray pixel-scroll">
+            {user && (
+              <Link 
+                to={`/user/${user.id}`} 
+                className="mobile-menu-item user-info"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Welcome, {firstName}
+              </Link>
+            )}
+            
+            <div className="mobile-menu-section">
+              <span className="mobile-menu-label">Companies</span>
+              {companies.map((co) => (
+                <Link 
+                  key={co.path} 
+                  to={co.path} 
+                  className="mobile-menu-item"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {co.name}
+                </Link>
+              ))}
+            </div>
+
+            {user ? (
+              <button 
+                onClick={() => { logout(); setIsMenuOpen(false); }} 
+                className="pixel-btn logout-btn mobile-logout"
+              >
+                Logout
+              </button>
+            ) : (
+              <button 
+                onClick={() => { navigate('/login'); setIsMenuOpen(false); }} 
+                className="pixel-btn"
+              >
+                Login
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </header>
   );
 }
