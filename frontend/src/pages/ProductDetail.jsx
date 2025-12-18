@@ -1,26 +1,12 @@
 // src/pages/ProductDetail.jsx
 import React, { useEffect, useState } from 'react';
+import PixelStar from '../components/PixelStar';
+
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/ProductDetail.css';
 
 const apiBase = import.meta.env.VITE_API_BASE || '/backend';
-
-// Pixel Star Component using SVG (Bigger, thicker border)
-
-
-// Pixel Star Component using SVG (Bigger, thicker border)
-const PixelStar = () => (
-   <svg viewBox="0 0 24 24" className="pixel-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-     <path 
-       d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
-       fill="#FFD700" 
-       stroke="black" 
-       strokeWidth="2" 
-       strokeLinejoin="round"
-    />
-   </svg>
-);
 
 export default function ProductDetail() {
   const { id } = useParams(); // e.g. "N1", "W5"
@@ -251,7 +237,7 @@ export default function ProductDetail() {
            <div className="pd-price">{priceDisplay}</div>
            <div className="pd-rating">
               {/* Show stars based on rating */}
-              <span style={{marginRight: '8px'}}>{product.rating}</span>
+              <span style={{marginRight: '8px'}}>{Number(product.rating || 0).toFixed(1)}</span>
               <PixelStar />
            </div>
         </div>
@@ -318,10 +304,8 @@ export default function ProductDetail() {
                   {/* Format Date if possible, or just show raw */}
                   <span className="review-date">{new Date(review.created_at).toLocaleDateString()}</span>
                   <div style={{display:'flex', gap:'2px', marginBottom:'0.5rem'}}>
-                     {[...Array(5)].map((_, i) => (
-                        <svg key={i} viewBox="0 0 24 24" className="pixel-star" style={{width:'20px', height:'20px', opacity: i < review.rating ? 1 : 0.3 }}>
-                           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FFD700" stroke="black" strokeWidth="2" strokeLinejoin="round" />
-                        </svg>
+                     {[1,2,3,4,5].map(star => (
+                        <PixelStar key={star} size={16} filled={star <= review.rating} />
                      ))}
                   </div>
                   <p className="review-text">"{review.comment}"</p>

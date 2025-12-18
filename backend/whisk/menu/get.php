@@ -68,25 +68,50 @@ if (!$data) {
     return;
 }
 
-// 3) Inject local visit counts
+// 3) Inject local visit counts and combine ratings
 if (is_array($data)) {
-    // Prepare statement for counting visits
-    // $pdo comes from db.php
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM visits WHERE product_id = ?");
+    // Prepare statements for counting visits and reviews
+    require __DIR__ . '/../../common/db.php';
+    $visitStmt = $pdo->prepare("SELECT COUNT(*) FROM visits WHERE product_id = ?");
+    $reviewStmt = $pdo->prepare("SELECT AVG(rating), COUNT(*) FROM reviews WHERE product_id = ?");
 
     foreach ($data as &$item) {
         $pid = $item['id']; // e.g. "W1"
 
+        // 1. Local Visits
         $localVisits = 0;
         try {
-            $stmt->execute([$pid]);
-            $localVisits = (int) $stmt->fetchColumn();
-            $stmt->closeCursor();
+            $visitStmt->execute([$pid]);
+            $localVisits = (int) $visitStmt->fetchColumn();
+            $visitStmt->closeCursor();
         } catch (Exception $e) {
             $localVisits = 0;
         }
-
         $item['visits'] = $localVisits;
+
+        // 2. Local Reviews aggregate
+        $localAvg = 0;
+        $localCount = 0;
+        try {
+            $reviewStmt->execute([$pid]);
+            $row = $reviewStmt->fetch(PDO::FETCH_NUM);
+            if ($row) {
+                $localAvg = (float) $row[0];
+                $localCount = (int) $row[1];
+            }
+            $reviewStmt->closeCursor();
+        } catch (Exception $e) {
+        }
+
+        // 3. Combine Ratings: Check for presence to avoid averaging with 0
+        $remoteRating = isset($item["rating"]) ? (float) $item["rating"] : 0;
+        if ($localCount > 0 && $remoteRating > 0) {
+            $item['rating'] = ($remoteRating + $localAvg) / 2;
+        } elseif ($localCount > 0) {
+            $item['rating'] = $localAvg;
+        } else {
+            $item['rating'] = $remoteRating;
+        }
     }
     unset($item);
 }

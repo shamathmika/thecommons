@@ -42,34 +42,62 @@ if (!is_array($rawListings)) {
 // 3. Transform each Nestly listing into the unified marketplace format
 $products = [];
 
-// Prepare statement for fetching local visits
+// Prepare statements for fetching local visits and reviews
 require __DIR__ . '/../../common/db.php';
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM visits WHERE product_id = ?");
+$visitStmt = $pdo->prepare("SELECT COUNT(*) FROM visits WHERE product_id = ?");
+$reviewStmt = $pdo->prepare("SELECT AVG(rating), COUNT(*) FROM reviews WHERE product_id = ?");
 
 foreach ($rawListings as $listing) {
     $pid = "N" . $listing["id"]; // Construct product ID for local lookup
 
-    // Get local visit count
+    // 1. Get local visit count
     $localVisits = 0;
-    $debugErr = null;
     try {
-        $stmt->execute([$pid]);
-        $localVisits = (int) $stmt->fetchColumn();
-        $stmt->closeCursor(); // Ensure cursor is closed for next iteration
+        $visitStmt->execute([$pid]);
+        $localVisits = (int) $visitStmt->fetchColumn();
+        $visitStmt->closeCursor();
     } catch (Exception $e) {
         $localVisits = 0;
-        $debugErr = $e->getMessage();
+    }
+
+    // 2. Get local reviews aggregate
+    $localAvg = 0;
+    $localCount = 0;
+    try {
+        $reviewStmt->execute([$pid]);
+        $row = $reviewStmt->fetch(PDO::FETCH_NUM);
+        if ($row) {
+            $localAvg = (float) $row[0];
+            $localCount = (int) $row[1];
+        }
+        $reviewStmt->closeCursor();
+    } catch (Exception $e) {
+        // ignore
+    }
+
+    // 3. Combine Ratings: Check for presence to avoid averaging with 0
+    $remoteRating = isset($listing["avg_rating"]) ? (float) $listing["avg_rating"] : 0;
+
+    // Improved Logic:
+    // If we have local reviews, and a remote rating exists (>0), average them.
+    // If we have local reviews but no remote rating (0), use local.
+    // Otherwise use remote.
+    if ($localCount > 0 && $remoteRating > 0) {
+        $finalRating = ($remoteRating + $localAvg) / 2;
+    } elseif ($localCount > 0) {
+        $finalRating = $localAvg;
+    } else {
+        $finalRating = $remoteRating;
     }
 
     $products[] = [
-        "id" => $pid,                   // e.g. N1, N2...
+        "id" => $pid,
         "company" => "nestly",
         "name" => $listing["title"] ?? "",
-        "debug_error" => $debugErr, // TEMPORARY DEBUG
         "type" => "rental",
         "price" => isset($listing["rent"]) ? (float) $listing["rent"] : null,
-        "rating" => isset($listing["avg_rating"]) ? (float) $listing["avg_rating"] : 0,
-        "visits" => $localVisits, // Use our local count
+        "rating" => $finalRating,
+        "visits" => $localVisits,
         "image" => $listing["image_url"] ?? null,
         "description" => $listing["description"] ?? "",
     ];
