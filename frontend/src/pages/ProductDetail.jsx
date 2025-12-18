@@ -57,52 +57,19 @@ export default function ProductDetail() {
   // Determine Type & Action based on ID
   const isNestly = id?.startsWith('N');
   const isWhisk = id?.startsWith('W');
-  const companyName = isNestly ? 'NESTLY' : isWhisk ? 'WHISK' : 'MARKETPLACE';
-  const companyCode = isNestly ? 'nestly' : isWhisk ? 'whisk' : 'petsit';
+  const isPetsit = id?.startsWith('P');
+  
+  const companyName = isNestly ? 'NESTLY' : isWhisk ? 'WHISK' : isPetsit ? 'PETSITHUB' : 'MARKETPLACE';
+  const companyCode = isNestly ? 'nestly' : isWhisk ? 'whisk' : isPetsit ? 'petsit' : 'petsit';
   const actionLabel = isNestly ? 'Book Now' : 'Buy Now';
   
   // Back Link Logic
-  const backLink = isNestly ? '/nestly' : isWhisk ? '/whisk' : '/';
-  const backText = isNestly ? '← Back to Listings' : isWhisk ? '← Back to Menu' : '← Back to Village';
+  const backLink = isNestly ? '/nestly' : isWhisk ? '/whisk' : isPetsit ? '/petsit' : '/';
+  const backText = isNestly ? '← Back to Listings' : isWhisk ? '← Back to Menu' : isPetsit ? '← Back to Services' : '← Back to Village';
 
   useEffect(() => {
     if (!id) return;
     
-    // 1. Track Visit (Industry Standard: Unique per session/cookie)
-    const trackVisit = async () => {
-      // Check if already visited this session
-      const visitedKey = `visited_${id}`;
-      const hasVisited = sessionStorage.getItem(visitedKey); // Simple session storage check
-
-      if (hasVisited) return; 
-
-      try {
-        const res = await fetch(`${apiBase}/marketplace/tracking.php`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            product_id: id,
-            company: companyCode,
-            user_id: user ? user.id : null
-          })
-        });
-
-        if (res.ok) {
-           // Mark as visited
-           sessionStorage.setItem(visitedKey, 'true');
-           
-           // Optimistically update visit count in UI if product is loaded
-           setProduct(prev => prev ? ({...prev, visits: (prev.visits || 0) + 1}) : prev);
-        }
-      } catch (e) {
-        console.error("Tracking failed", e);
-      }
-    };
-    if (product) {
-       // Only track once product is identified/loaded to avoid ghost tracking
-       trackVisit();
-    }
-
     // 2. Fetch Product Details
     async function fetchProduct() {
       try {
@@ -110,6 +77,7 @@ export default function ProductDetail() {
         let endpoint = '';
         if (isNestly) endpoint = `${apiBase}/nestly/listings/get.php`;
         else if (isWhisk) endpoint = `${apiBase}/whisk/menu/get.php`;
+        else if (isPetsit) endpoint = `${apiBase}/petsit/services/get.php`;
         else endpoint = `${apiBase}/marketplace/products/top.php`; // Fallback
 
         const res = await fetch(endpoint);
