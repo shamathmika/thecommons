@@ -17,7 +17,7 @@ $response = @file_get_contents($nestlyUrl);
 if ($response === false) {
     // Up to you: return empty list or an error object
     echo json_encode([]);
-    exit;
+    return;
 }
 
 // 2. Decode the JSON from Nestly
@@ -25,14 +25,14 @@ $rawListings = json_decode($response, true);
 
 if (!is_array($rawListings)) {
     echo json_encode([]);
-    exit;
+    return;
 }
 
 // 3. Transform each Nestly listing into the unified marketplace format
 $products = [];
 
 // Prepare statement for fetching local visits
-require_once __DIR__ . '/../../common/db.php';
+require __DIR__ . '/../../common/db.php';
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM visits WHERE product_id = ?");
 
 foreach ($rawListings as $listing) {
