@@ -14,6 +14,7 @@ import "./styles/Home.css";
 // pixel village images
 import homeBg from './assets/home_bg.png';
 import greenGrass from './assets/green_grass.png';
+import greenGrassHorizontal from './assets/green_grass_horizontal.png';
 import nestlyImg from "./assets/nestly.png";
 import whiskImg from "./assets/whisk.png";
 import petsitImg from "./assets/petsithub.png";
@@ -59,7 +60,7 @@ function Home() {
     <div
       className="home-container"
       style={{
-        '--grass-tiling': `url(${greenGrass})`,
+        '--grass-tiling': `url(${greenGrassHorizontal})`,
       }}
     >
       
