@@ -224,7 +224,10 @@ export default function ProductDetail() {
       <div className="product-info-card">
         <div className="pd-header">
            <h1 className="pd-title">{product.name}</h1>
-           <span className="pd-company-tag">{companyName}</span>
+           <span className={`pd-company-tag tag-${companyCode}`}>
+             {companyName}
+           </span>
+
         </div>
 
         {product.image && (

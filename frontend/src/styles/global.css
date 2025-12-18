@@ -105,9 +105,26 @@ button, input {
   border-color: var(--wood-light);
 }
 
+
 .container {
   width: 100%;
   max-width: none;
   margin: 0;
   padding: 0;
+}
+
+/* Company Tags */
+.tag-nestly {
+  background-color: #808000 !important; /* Olive Green */
+  color: #fff !important;
+}
+
+.tag-whisk {
+  background-color: #E6E6FA !important; /* Lavender */
+  color: #4B0082 !important; /* Indigo text */
+}
+
+.tag-petsit {
+  background-color: #FFC0CB !important; /* Pink */
+  color: #8B0000 !important; /* Deep Red text */
 }

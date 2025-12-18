@@ -24,7 +24,7 @@ export default function ProductCard({ product }) {
     typeof rating === "number" ? rating.toFixed(1) : null;
 
   return (
-    <div className="product-card pixel-card">
+    <div className={`product-card pixel-card card-${company?.toLowerCase()}`}>
       <div className="product-card-inner">
         {image && (
           <div className="product-card-image-wrapper">
@@ -36,7 +36,7 @@ export default function ProductCard({ product }) {
           <div className="product-card-header">
             <h3 className="product-card-title">{name}</h3>
             {company && (
-              <span className="product-card-company-tag">
+              <span className={`product-card-company-tag tag-${company.toLowerCase()}`}>
                 {company.toUpperCase()}
               </span>
             )}

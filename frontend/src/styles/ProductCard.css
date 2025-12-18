@@ -24,6 +24,19 @@
   box-shadow: var(--pixel-shadow), 12px 12px 0px rgba(0,0,0,0.1); 
 }
 
+/* Company-specific hover backgrounds */
+.card-nestly:hover {
+  background-color: #cbd4b0; /* Very light olive */
+}
+
+.card-whisk:hover {
+  background-color: #f4f5fd; /* Very light lavender */
+}
+
+.card-petsit:hover {
+  background-color: #fff4f7; /* Very light pink */
+}
+
 /* Internal layout */
 .product-card-inner {
   display: flex;
@@ -85,6 +98,7 @@
   border: 2px solid var(--wood-dark);
   flex-shrink: 0;
 }
+
 
 /* Subrow: type + price */
 .product-card-subrow {
