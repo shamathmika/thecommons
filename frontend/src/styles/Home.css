@@ -152,3 +152,25 @@
   }
 }
 
+/* Top 5 marketplace section */
+.top-section {
+  margin-top: 3rem;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.top-title {
+  margin-bottom: 0.25rem;
+}
+
+.top-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.top-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
