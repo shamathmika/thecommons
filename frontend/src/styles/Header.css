@@ -126,6 +126,14 @@
   background-color: #d32f2f;
 }
 
+.about-link-mobile {
+  background: none;
+  border: none;
+  border-bottom: 2px dashed var(--paper-border);
+  cursor: pointer;
+  width: 100%;
+}
+
 /* Mobile Responsiveness */
 .mobile-only {
   display: none;

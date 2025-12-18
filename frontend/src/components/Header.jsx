@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Header.css';
+import AboutModal from './AboutModal';
 
 function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   const companies = [
     { name: 'Nestly', path: '/nestly' },
@@ -50,6 +52,10 @@ function Header() {
             ))}
           </div>
         </div>
+
+        <button className="pixel-btn about-btn" onClick={() => setIsAboutOpen(true)}>
+          About
+        </button>
 
         {user ? (
           <div className="user-nav">
@@ -103,6 +109,13 @@ function Header() {
               ))}
             </div>
 
+            <button 
+              className="mobile-menu-item about-link-mobile"
+              onClick={() => { setIsAboutOpen(true); setIsMenuOpen(false); }}
+            >
+              About
+            </button>
+
             {user ? (
               <button 
                 onClick={() => { logout(); setIsMenuOpen(false); }} 
@@ -121,6 +134,8 @@ function Header() {
           </div>
         )}
       </div>
+      
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
     </header>
   );
 }
