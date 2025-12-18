@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import CompanyPage from "./pages/CompanyPage";
 import ProductDetail from "./pages/ProductDetail";
 import UserProfile from "./pages/UserProfile";
+import Footer from "./components/Footer";
 
 import "./styles/global.css";
 import "./styles/Home.css";
@@ -255,6 +256,7 @@ function App() {
               <Route path="/marketplace" element={<CompanyPage company="marketplace" />} />
               <Route path="/user/:id" element={<UserProfile />} />
             </Routes>
+            <Footer />
           </div>
         </Router>
       </ModalProvider>

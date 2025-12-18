@@ -1,0 +1,35 @@
+/* Pixel-style footer consistent with header */
+
+.footer-container {
+  width: 100%;
+  background-color: var(--wood-dark);   /* same as header */
+  color: var(--wood-cream);
+  border-top: 4px solid var(--wood-light);
+  padding: 1rem 0;
+  margin-top: 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 -4px 0 rgba(0,0,0,0.3);
+}
+
+.footer-inner {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.footer-link {
+  color: var(--wood-cream);
+  text-decoration: none;
+  border-bottom: 2px dashed transparent;
+  transition: 0.2s;
+}
+
+.footer-link:hover {
+  color: var(--grass-green);
+  border-bottom: 2px dashed var(--grass-green);
+}
