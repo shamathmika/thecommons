@@ -1,6 +1,6 @@
 <?php
 // thecommons/backend/whisk/menu/top.php
-require_once __DIR__ . '/../../../common/cors.php';
+require_once __DIR__ . '/../../common/cors.php';
 
 header('Content-Type: application/json; charset=utf-8');
 

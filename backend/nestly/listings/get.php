@@ -11,7 +11,7 @@ ini_set('display_errors', 0);
 
 // 1. Call your Nestly API (already working & returns clean JSON)
 // 1. Call your Nestly API
-$nestlyUrl = "https://shamathmikacmpe272.app/api/listings/get-listings.php";
+$nestlyUrl = "https://shamathmikacmpe272.app/api/listings/get-full-details.php";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $nestlyUrl);
