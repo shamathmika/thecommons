@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import Login from "./pages/Login";
-import Nestly from "./pages/Nestly";
-import Whisk from "./pages/Whisk";
+import CompanyPage from "./pages/CompanyPage";
 import ProductDetail from "./pages/ProductDetail";
 
 import "./styles/global.css";
@@ -156,10 +155,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/nestly" element={<Nestly />} />
+            <Route path="/nestly" element={<CompanyPage company="nestly" />} />
             <Route path="/nestly/:id" element={<ProductDetail />} />
 
-            <Route path="/whisk" element={<Whisk />} />
+            <Route path="/whisk" element={<CompanyPage company="whisk" />} />
             <Route path="/whisk/:id" element={<ProductDetail />} />
 
             <Route
