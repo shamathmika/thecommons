@@ -1,0 +1,82 @@
+/* ===========================
+   PIXEL DROPDOWN (Clean + Fixed)
+   =========================== */
+
+.pixel-dd-container {
+  position: relative;
+  display: inline-block;
+  z-index: 100; /* ensures dropdown stays above cards */
+}
+
+/* Trigger button (smaller + cleaner) */
+.pixel-dd-trigger {
+  min-width: 140px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pixel-dd-arrow {
+  margin-left: 8px;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+/* Dropdown menu */
+.pixel-dd-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+
+  min-width: 160px;
+  background-color: var(--paper-bg);
+  border: 4px solid var(--wood-dark);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+  z-index: 1600;
+
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  visibility: hidden;
+  transition:
+    transform 0.25s ease-out,
+    opacity 0.2s ease-out,
+    visibility 0.2s;
+}
+
+.pixel-dd-menu.open {
+  opacity: 1;
+  transform: scaleY(1);
+  visibility: visible;
+}
+
+/* Dropdown items */
+.pixel-dd-item {
+  padding: 10px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-bottom: 2px dashed var(--paper-border);
+  text-align: center;
+  color: var(--text-color);
+}
+
+.pixel-dd-item:last-child {
+  border-bottom: none;
+}
+
+.pixel-dd-item:hover {
+  background-color: var(--wood-cream);
+  color: var(--wood-dark);
+}
+
+/* REMOVE green highlight */
+.pixel-dd-item.selected {
+  background-color: var(--wood-cream);
+  color: var(--wood-dark);
+  font-weight: bold;
+}

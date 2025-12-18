@@ -17,19 +17,35 @@ function Login() {
     setError('');
     
     let result;
+
     if (isLogin) {
+      // Normal login
       result = await login(formData.email, formData.password);
     } else {
-      result = await register(formData.name, formData.email, formData.password);
-      if (result.success) {
-        alert('Registered! Please login.');
-        setIsLogin(true);
+      // REGISTER FIRST
+      const reg = await register(formData.name, formData.email, formData.password);
+
+      if (!reg.success) {
+        setError(reg.error || 'Registration failed');
         return;
       }
+
+      // AUTO-LOGIN RIGHT AFTER REGISTER
+      const auto = await login(formData.email, formData.password);
+
+      if (!auto.success) {
+        setError(auto.error || 'Auto-login failed');
+        return;
+      }
+
+      // Registration + Auto-login succeeded → redirect
+      window.location.href = '/';
+      return;
     }
 
+    // NORMAL LOGIN RESULT
     if (result.success) {
-      window.location.href = '/'; 
+      window.location.href = '/';
     } else {
       setError(result.error || 'Operation failed');
     }

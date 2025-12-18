@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import PixelDropdown from "../components/PixelDropdown";
 
 const apiBase = import.meta.env.VITE_API_BASE || "/backend";
 
@@ -183,36 +184,16 @@ export default function CompanyPage({ company }) {
               >
                 Sort:
               </label>
-              <select
+              <PixelDropdown
                 value={sortBy}
-                onChange={(e) => {
-                  setSortBy(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="pixel-btn"
-                style={{
-                  padding: "4px 24px 4px 12px",
-                  fontSize: "0.9rem",
-                  cursor: "pointer",
-                  appearance: "none",
-                  WebkitAppearance: "none",
-                  backgroundColor: "var(--wood-light)",
-                  color: "white",
-                  border: "none",
-                  boxShadow: "var(--pixel-shadow-sm)",
-                  fontFamily: "inherit",
-                  backgroundImage:
-                    "linear-gradient(45deg, transparent 50%, white 50%), linear-gradient(135deg, white 50%, transparent 50%)",
-                  backgroundPosition:
-                    "calc(100% - 15px) center, calc(100% - 10px) center",
-                  backgroundSize: "5px 5px, 5px 5px",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <option value="popular">Popular</option>
-                <option value="rating">Top Rated</option>
-                <option value="visits">Most Visited</option>
-              </select>
+                onChange={(v) => { setSortBy(v); setCurrentPage(1); }}
+                options={[
+                  { value: "popular", label: "Popular" },
+                  { value: "rating", label: "Top Rated" },
+                  { value: "visits", label: "Most Visited" }
+                ]}
+              />
+
             </div>
           )}
 

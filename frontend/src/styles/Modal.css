@@ -1,0 +1,30 @@
+/* Overlay background */
+.pixel-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Modal card */
+.pixel-modal-card {
+  width: 90%;
+  max-width: 450px;
+  background: var(--paper-bg);
+  border: 4px solid var(--wood-dark);
+  box-shadow: var(--pixel-shadow);
+  padding: 1.8rem;
+  text-align: center;
+  animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}

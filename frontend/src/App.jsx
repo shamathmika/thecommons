@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { ModalProvider } from "./context/ModalContext";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import CompanyPage from "./pages/CompanyPage";
@@ -10,6 +11,7 @@ import UserProfile from "./pages/UserProfile";
 
 import "./styles/global.css";
 import "./styles/Home.css";
+import "./styles/Modal.css";
 
 // pixel village images
 import homeBg from './assets/home_bg.png';
@@ -158,6 +160,7 @@ function Home() {
 function App() {
   return (
     <AuthProvider>
+      <ModalProvider>
       <Router>
         <div className="app-wrapper">
           <Header />
@@ -179,6 +182,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      </ModalProvider>
     </AuthProvider>
   );
 }
