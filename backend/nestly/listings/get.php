@@ -10,12 +10,23 @@ error_reporting(0);
 ini_set('display_errors', 0);
 
 // 1. Call your Nestly API (already working & returns clean JSON)
+// 1. Call your Nestly API
 $nestlyUrl = "https://shamathmikacmpe272.app/api/listings/get-listings.php";
 
-$response = @file_get_contents($nestlyUrl);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $nestlyUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36');
+
+// Relax SSL checks for compatibility with shared hosting
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+$response = curl_exec($ch);
 
 if ($response === false) {
-    // Up to you: return empty list or an error object
     echo json_encode([]);
     return;
 }
