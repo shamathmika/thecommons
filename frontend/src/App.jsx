@@ -20,6 +20,12 @@ import greenGrassHorizontal from './assets/green_grass_horizontal.png';
 import nestlyImg from "./assets/nestly.png";
 import whiskImg from "./assets/whisk.png";
 import petsitImg from "./assets/petsithub.png";
+import avatar1 from "./assets/1.png";
+import avatar2 from "./assets/2.png";
+import avatar3 from "./assets/3.png";
+import avatar4 from "./assets/4.png";
+import avatar5 from "./assets/5.png";
+
 
 import ProductCard from "./components/ProductCard";
 
@@ -35,6 +41,9 @@ function Home() {
   const [loadingTestimonials, setLoadingTestimonials] = useState(true);
   const carouselRef = useRef(null);
 
+  // Avatar mapping
+  const avatarMap = [avatar1, avatar2, avatar3, avatar4, avatar5];
+
   // Load overall marketplace top 5
   useEffect(() => {
     async function fetchTopProducts() {
@@ -43,7 +52,6 @@ function Home() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
-
         const items = Array.isArray(data.top)
           ? data.top
           : Array.isArray(data)
@@ -189,7 +197,7 @@ function Home() {
         )}
       </section>
 
-      {/* === VILLAGE VOICES: TESTIMONIALS === */}
+      {/* === VILLAGE VOICES TESTIMONIALS === */}
       <section className="top-section" style={{ marginTop: "2rem" }}>
         <h2 className="pixel-font top-title">Village Voices</h2>
         <p className="top-subtitle">Stories from your fellow villagers</p>
@@ -202,12 +210,25 @@ function Home() {
 
         {!loadingTestimonials && testimonials.length > 0 && (
           <div className="testimonial-carousel" ref={carouselRef}>
-            {testimonials.map((t) => (
-              <div key={t.id} className="pixel-card testimonial-card">
-                <h3 className="pixel-font testimonial-name">{t.name}</h3>
-                <p className="testimonial-text">"{t.review}"</p>
-              </div>
-            ))}
+            {testimonials.map((t) => {
+              const avatar = avatarMap[t.id % 5];
+
+              return (
+                <div key={t.id} className="pixel-card testimonial-card">
+                  <div className="testimonial-row">
+                    <img
+                      src={avatar}
+                      className="testimonial-avatar"
+                      alt="villager avatar"
+                    />
+                    <div className="testimonial-body">
+                      <h3 className="pixel-font testimonial-name">{t.name}</h3>
+                      <p className="testimonial-text">"{t.review}"</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </section>

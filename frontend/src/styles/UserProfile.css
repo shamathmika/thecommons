@@ -132,3 +132,27 @@
   cursor: not-allowed;
   background-color: #999;
 }
+
+.profile-header-flex {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Smaller, better-scaled pixel avatar */
+.profile-avatar {
+  width: 50px;         /* was too large, now 140px */
+  height: auto;
+  image-rendering: pixelated;
+  margin-left: 1rem;
+}
+
+.profile-info-section {
+  flex: 1;
+}
+
+.profile-title {
+  margin-top: 0;
+  font-size: 2rem;      /* reduce slightly for balance */
+}
+

@@ -6,6 +6,13 @@ import { useModal } from '../context/ModalContext';
 import PixelStar from '../components/PixelStar';
 import '../styles/UserProfile.css';
 
+// Avatar imports
+import avatar1 from "../assets/1.png";
+import avatar2 from "../assets/2.png";
+import avatar3 from "../assets/3.png";
+import avatar4 from "../assets/4.png";
+import avatar5 from "../assets/5.png";
+
 const apiBase = import.meta.env.VITE_API_BASE || '/backend';
 
 export default function UserProfile() {
@@ -20,7 +27,11 @@ export default function UserProfile() {
   const [loadingReviews, setLoadingReviews] = useState(true);
   const [productNames, setProductNames] = useState({});
 
-  // 1. Fetch User Reviews
+  // Avatar selection
+  const avatarMap = [avatar1, avatar2, avatar3, avatar4, avatar5];
+  const avatar = avatarMap[id % 5];
+
+  // Fetch User Reviews
   useEffect(() => {
     async function fetchUserReviews() {
       try {
@@ -38,7 +49,7 @@ export default function UserProfile() {
     fetchUserReviews();
   }, [id]);
 
-  // 2. Fetch products to map names
+  // Fetch products to map names
   useEffect(() => {
     async function fetchAllMarketplaceInfo() {
       try {
@@ -48,6 +59,7 @@ export default function UserProfile() {
         ]);
 
         const nameMap = {};
+
         if (nestlyRes.ok) {
           const nestlyData = await nestlyRes.json();
           if (Array.isArray(nestlyData)) {
@@ -70,7 +82,7 @@ export default function UserProfile() {
     fetchAllMarketplaceInfo();
   }, []);
 
-  // 3. Delete Account (modal confirm)
+  // Delete Account: opens modal
   const handleDeleteAccount = () => {
     openModal({
       title: "Delete Account?",
@@ -111,24 +123,37 @@ export default function UserProfile() {
 
   return (
     <div className="user-profile-container">
-      <div className="pixel-card profile-header-card">
-        <h1 className="profile-title">
-          {isOwnProfile ? "My Profile" : "User Profile"}
-        </h1>
 
-        <div className="profile-info">
-          <p>
-            <strong>Name:</strong>{" "}
-            {isOwnProfile ? user.name : "Citizen " + id}
-          </p>
-          <p>
-            <strong>Status:</strong> Active Resident
-          </p>
+      {/* HEADER CARD WITH AVATAR */}
+      <div className="pixel-card profile-header-card">
+        <div className="profile-header-flex">
+          <img 
+            src={avatar} 
+            alt="Villager avatar" 
+            className="profile-avatar"
+          />
+
+          <div className="profile-info-section">
+            <h1 className="profile-title">
+              {isOwnProfile ? "My Profile" : "User Profile"}
+            </h1>
+
+            <div className="profile-info">
+              <p>
+                <strong>Name:</strong>{" "}
+                {isOwnProfile ? user.name : "Citizen " + id}
+              </p>
+              <p>
+                <strong>Status:</strong> Active Resident
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* GRID LAYOUT */}
       <div className="profile-grid">
-        
+
         {/* LEFT: User Stats + Reviews */}
         <div className="pixel-card stats-card">
           <h3>My Community Activity</h3>
