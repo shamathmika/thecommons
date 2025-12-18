@@ -244,18 +244,20 @@ function App() {
         <Router>
           <div className="app-wrapper">
             <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/nestly" element={<CompanyPage company="nestly" />} />
-              <Route path="/nestly/:id" element={<ProductDetail />} />
-              <Route path="/whisk" element={<CompanyPage company="whisk" />} />
-              <Route path="/whisk/:id" element={<ProductDetail />} />
-              <Route path="/petsit" element={<CompanyPage company="petsit" />} />
-              <Route path="/petsit/:id" element={<ProductDetail />} />
-              <Route path="/marketplace" element={<CompanyPage company="marketplace" />} />
-              <Route path="/user/:id" element={<UserProfile />} />
-            </Routes>
+            <div className="app-content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/nestly" element={<CompanyPage company="nestly" />} />
+                <Route path="/nestly/:id" element={<ProductDetail />} />
+                <Route path="/whisk" element={<CompanyPage company="whisk" />} />
+                <Route path="/whisk/:id" element={<ProductDetail />} />
+                <Route path="/petsit" element={<CompanyPage company="petsit" />} />
+                <Route path="/petsit/:id" element={<ProductDetail />} />
+                <Route path="/marketplace" element={<CompanyPage company="marketplace" />} />
+                <Route path="/user/:id" element={<UserProfile />} />
+              </Routes>
+            </div>
             <Footer />
           </div>
         </Router>
