@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ModalProvider } from "./context/ModalContext";
@@ -13,10 +13,10 @@ import "./styles/global.css";
 import "./styles/Home.css";
 import "./styles/Modal.css";
 
-// pixel village images
 import homeBg from './assets/home_bg.png';
 import greenGrass from './assets/green_grass.png';
 import greenGrassHorizontal from './assets/green_grass_horizontal.png';
+
 import nestlyImg from "./assets/nestly.png";
 import whiskImg from "./assets/whisk.png";
 import petsitImg from "./assets/petsithub.png";
@@ -30,6 +30,11 @@ function Home() {
   const [loadingTop, setLoadingTop] = useState(true);
   const [topError, setTopError] = useState("");
 
+  // TESTIMONIALS
+  const [testimonials, setTestimonials] = useState([]);
+  const [loadingTestimonials, setLoadingTestimonials] = useState(true);
+  const carouselRef = useRef(null);
+
   // Load overall marketplace top 5
   useEffect(() => {
     async function fetchTopProducts() {
@@ -39,14 +44,13 @@ function Home() {
 
         const data = await res.json();
 
-        if (data && Array.isArray(data.top)) {
-          setTopProducts(data.top);
-        } else if (Array.isArray(data)) {
-          // fallback if backend ever just returns an array
-          setTopProducts(data);
-        } else {
-          setTopProducts([]);
-        }
+        const items = Array.isArray(data.top)
+          ? data.top
+          : Array.isArray(data)
+          ? data
+          : [];
+
+        setTopProducts(items);
       } catch (err) {
         console.error("Failed to load top marketplace products", err);
         setTopError("Failed to load top marketplace products.");
@@ -58,26 +62,73 @@ function Home() {
     fetchTopProducts();
   }, []);
 
+  // Load testimonials
+  useEffect(() => {
+    async function fetchTestimonials() {
+      try {
+        const res = await fetch(`${apiBase}/marketplace/users/testimonials.php`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setTestimonials(data);
+        } else {
+          setTestimonials([]);
+        }
+      } catch (err) {
+        console.error("Failed to load testimonials", err);
+      } finally {
+        setLoadingTestimonials(false);
+      }
+    }
+
+    fetchTestimonials();
+  }, []);
+
+  // Auto-scroll for testimonials
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    let scrollAmount = 1;
+
+    const interval = setInterval(() => {
+      el.scrollLeft += scrollAmount;
+
+      if (el.scrollLeft + el.clientWidth >= el.scrollWidth) {
+        el.scrollLeft = 0; // reset loop
+      }
+    }, 30);
+
+    // Pause on hover
+    const stop = () => (scrollAmount = 0);
+    const resume = () => (scrollAmount = 1);
+
+    el.addEventListener("mouseenter", stop);
+    el.addEventListener("mouseleave", resume);
+
+    return () => {
+      clearInterval(interval);
+      el.removeEventListener("mouseenter", stop);
+      el.removeEventListener("mouseleave", resume);
+    };
+  }, [testimonials]);
+
   return (
     <div
       className="home-container"
-      style={{
-        '--grass-tiling': `url(${greenGrassHorizontal})`,
-      }}
+      style={{ '--grass-tiling': `url(${greenGrassHorizontal})` }}
     >
-      
-      {/* Hero Section: Map (Desktop) / List (Mobile) */}
+      {/* === HERO SECTION === */}
       <div className="hero-section">
-        {/* Background handled by CSS to switch between home_bg.png and green_grass.png */}
-        <div 
-          className="village-map-background" 
-          style={{ 
+        <div
+          className="village-map-background"
+          style={{
             '--desktop-bg': `url(${homeBg})`,
-            '--mobile-bg': `url(${greenGrass})`
+            '--mobile-bg': `url(${greenGrass})`,
           }}
         />
 
-        {/* Village Sign */}
         <div className="pixel-card village-sign">
           <h2>The Village Map</h2>
           <p>Select a destination to visit</p>
@@ -85,60 +136,44 @@ function Home() {
             See the Entire Marketplace
           </Link>
         </div>
-        
-        {/* Interactive Spots */}
+
         <div className="map-interactables">
-          
-          {/* Nestly */}
           <Link to="/nestly" className="house-link pos-nestly">
-            <img src={nestlyImg} alt="" className="mobile-house-icon" />
+            <img src={nestlyImg} className="mobile-house-icon" />
             <div className="house-label">Nestly</div>
           </Link>
 
-          {/* Whisk */}
           <Link to="/whisk" className="house-link pos-whisk">
-            <img src={whiskImg} alt="" className="mobile-house-icon" />
+            <img src={whiskImg} className="mobile-house-icon" />
             <div className="house-label">Whisk</div>
           </Link>
 
-          {/* PetSitHub */}
           <Link to="/petsit" className="house-link pos-petsit">
-            <img src={petsitImg} alt="" className="mobile-house-icon" />
+            <img src={petsitImg} className="mobile-house-icon" />
             <div className="house-label">PetSitHub</div>
           </Link>
-
         </div>
       </div>
 
-      {/* Road Path Divider (optional visual) */}
-      <div className="road-path"></div>
+      <div className="road-path" />
 
-      {/* === Top 5 Marketplace Section === */}
+      {/* === TOP 5 PICKS === */}
       <section className="top-section">
         <h2 className="pixel-font top-title">Top 5 Picks in The Commons</h2>
-        <p className="top-subtitle">
-          Based on 70% rating and 30% visit count across all companies.
-        </p>
+        <p className="top-subtitle">Based on ratings & visits village-wide.</p>
 
-        {loadingTop && <p>Loading top products...</p>}
+        {loadingTop && <p>Loading...</p>}
         {topError && <p style={{ color: "red" }}>{topError}</p>}
-
-        {!loadingTop && !topError && topProducts.length === 0 && (
-          <p>No products available yet.</p>
-        )}
 
         {!loadingTop && !topError && topProducts.length > 0 && (
           <div className="top-grid">
             {topProducts.map((p) => {
-              let detailLink = "/";
-
-              if (p.company === "whisk") {
-                detailLink = `/whisk/${encodeURIComponent(p.id)}`;
-              } else if (p.company === "nestly") {
-                detailLink = `/nestly/${encodeURIComponent(p.id)}`; // Assuming detail page exists or goes to list
-              } else if (p.company === "petsit") {
-                detailLink = `/petsit/${encodeURIComponent(p.id)}`;
-              }
+              let detailLink =
+                p.company === "whisk"
+                  ? `/whisk/${p.id}`
+                  : p.company === "nestly"
+                  ? `/nestly/${p.id}`
+                  : `/petsit/${p.id}`;
 
               return (
                 <Link
@@ -153,6 +188,29 @@ function Home() {
           </div>
         )}
       </section>
+
+      {/* === VILLAGE VOICES: TESTIMONIALS === */}
+      <section className="top-section" style={{ marginTop: "2rem" }}>
+        <h2 className="pixel-font top-title">Village Voices</h2>
+        <p className="top-subtitle">Stories from your fellow villagers</p>
+
+        {loadingTestimonials && <p>Gathering villager stories...</p>}
+
+        {!loadingTestimonials && testimonials.length === 0 && (
+          <p>No testimonials yet. Be the first to share a village memory!</p>
+        )}
+
+        {!loadingTestimonials && testimonials.length > 0 && (
+          <div className="testimonial-carousel" ref={carouselRef}>
+            {testimonials.map((t) => (
+              <div key={t.id} className="pixel-card testimonial-card">
+                <h3 className="pixel-font testimonial-name">{t.name}</h3>
+                <p className="testimonial-text">"{t.review}"</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
@@ -161,27 +219,23 @@ function App() {
   return (
     <AuthProvider>
       <ModalProvider>
-      <Router>
-        <div className="app-wrapper">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-
-            <Route path="/nestly" element={<CompanyPage company="nestly" />} />
-            <Route path="/nestly/:id" element={<ProductDetail />} />
-
-            <Route path="/whisk" element={<CompanyPage company="whisk" />} />
-            <Route path="/whisk/:id" element={<ProductDetail />} />
-            <Route path="/user/:id" element={<UserProfile />} />
-
-            <Route path="/petsit" element={<CompanyPage company="petsit" />} />
-            <Route path="/petsit/:id" element={<ProductDetail />} />
-
-            <Route path="/marketplace" element={<CompanyPage company="marketplace" />} />
-          </Routes>
-        </div>
-      </Router>
+        <Router>
+          <div className="app-wrapper">
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/nestly" element={<CompanyPage company="nestly" />} />
+              <Route path="/nestly/:id" element={<ProductDetail />} />
+              <Route path="/whisk" element={<CompanyPage company="whisk" />} />
+              <Route path="/whisk/:id" element={<ProductDetail />} />
+              <Route path="/petsit" element={<CompanyPage company="petsit" />} />
+              <Route path="/petsit/:id" element={<ProductDetail />} />
+              <Route path="/marketplace" element={<CompanyPage company="marketplace" />} />
+              <Route path="/user/:id" element={<UserProfile />} />
+            </Routes>
+          </div>
+        </Router>
       </ModalProvider>
     </AuthProvider>
   );

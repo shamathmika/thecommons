@@ -272,3 +272,51 @@
   gap: 1.5rem;
 }
 
+/* === Village Voices (User Review Carousel) === */
+
+/* Horizontal Scrolling Container */
+.testimonial-carousel {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  white-space: nowrap;
+  padding: 1rem 0;
+
+  scrollbar-width: none;
+}
+.testimonial-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each testimonial card */
+.testimonial-card {
+  width: 240px;
+  min-width: 240px;
+  max-width: 240px;
+
+  padding: 1rem;
+  background-color: var(--paper-bg);
+  border: 4px solid var(--wood-dark);
+  box-shadow: var(--pixel-shadow);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  white-space: normal; /* allow wrapping inside */
+}
+
+.testimonial-name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-text {
+  font-size: 0.95rem;
+  line-height: 1.3;
+  opacity: 0.9;
+}
