@@ -107,7 +107,7 @@ foreach ($rawServices as $service) {
     // ---- 3d. Normalize into The Commons product schema ----
     $products[] = [
         "id"          => $pid,          // e.g. "P1", "P2"
-        "company"     => "petsithub",      // company key for PetSitHub
+        "company"     => "petsit",      // company key for PetSitHub
         "name"        => $name,
         "type"        => $type ?: "service",
         "price"       => $price,
