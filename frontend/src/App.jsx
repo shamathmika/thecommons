@@ -12,6 +12,8 @@ import "./styles/global.css";
 import "./styles/Home.css";
 
 // pixel village images
+import homeBg from './assets/home_bg.png';
+import greenGrass from './assets/green_grass.png';
 import nestlyImg from "./assets/nestly.png";
 import whiskImg from "./assets/whisk.png";
 import petsitImg from "./assets/petsithub.png";
@@ -55,47 +57,49 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/* Village Sign */}
-      <div className="pixel-card village-sign">
-        <h2>The Village Map</h2>
-        <p>Select a destination to visit</p>
+      
+      {/* Hero Section: Map (Desktop) / List (Mobile) */}
+      <div className="hero-section">
+        {/* Background handled by CSS to switch between home_bg.png and green_grass.png */}
+        <div 
+          className="village-map-background" 
+          style={{ 
+            '--desktop-bg': `url(${homeBg})`,
+            '--mobile-bg': `url(${greenGrass})`
+          }}
+        />
+
+        {/* Village Sign */}
+        <div className="pixel-card village-sign">
+          <h2>The Village Map</h2>
+          <p>Select a destination to visit</p>
+        </div>
+        
+        {/* Interactive Spots */}
+        <div className="map-interactables">
+          
+          {/* Nestly */}
+          <Link to="/nestly" className="house-link pos-nestly">
+            <img src={nestlyImg} alt="" className="mobile-house-icon" />
+            <div className="house-label">Nestly</div>
+          </Link>
+
+          {/* Whisk */}
+          <Link to="/whisk" className="house-link pos-whisk">
+            <img src={whiskImg} alt="" className="mobile-house-icon" />
+            <div className="house-label">Whisk</div>
+          </Link>
+
+          {/* PetSitHub */}
+          <Link to="/petsit" className="house-link pos-petsit">
+            <img src={petsitImg} alt="" className="mobile-house-icon" />
+            <div className="house-label">PetSitHub</div>
+          </Link>
+
+        </div>
       </div>
 
-      {/* Map Layout */}
-      <div className="map-layout">
-        {/* Nestly House */}
-        <Link to="/nestly" className="map-building">
-          <div className="building-wrapper">
-            <img src={nestlyImg} alt="Nestly House" className="building-img" />
-            <div className="pixel-btn visit-btn">Nestly</div>
-          </div>
-        </Link>
-
-        {/* Whisk Bakery */}
-        <Link to="/whisk" className="map-building map-building-whisk">
-          <div className="building-wrapper">
-            <img
-              src={whiskImg}
-              alt="Whisk Bakery"
-              className="building-img building-img-whisk"
-            />
-            <div className="pixel-btn visit-btn">Whisk</div>
-          </div>
-        </Link>
-
-        {/* PetSitHub Kennel */}
-        <Link to="/petsit" className="map-building">
-          <div className="building-wrapper">
-            <img
-              src={petsitImg}
-              alt="PetSitHub"
-              className="building-img building-img-petsit"
-            />
-            <div className="pixel-btn visit-btn">PetSitHub</div>
-          </div>
-        </Link>
-      </div>
-
+      {/* Road Path Divider (optional visual) */}
       <div className="road-path"></div>
 
       {/* === Top 5 Marketplace Section === */}
@@ -118,13 +122,10 @@ function Home() {
               let detailLink = "/";
 
               if (p.company === "whisk") {
-                // We have detail pages for Whisk
                 detailLink = `/whisk/${encodeURIComponent(p.id)}`;
               } else if (p.company === "nestly") {
-                // Send Nestly items to Nestly page for now
-                detailLink = "/nestly";
+                detailLink = `/nestly/${encodeURIComponent(p.id)}`; // Assuming detail page exists or goes to list
               } else if (p.company === "petsit") {
-                // Placeholder for PetSitHub
                 detailLink = "/petsit";
               }
 

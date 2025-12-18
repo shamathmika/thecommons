@@ -1,12 +1,21 @@
 /* frontend/src/styles/Home.css */
 .home-container {
-  text-align: center;
   width: 100%;
-  min-height: calc(100vh - 80px);
+  padding: 0;
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  /* User requested background color when scrolling */
+  background-color: #9AB261; 
+}
+
+/* === Hero Section (Map/List) === */
+.hero-section {
+  width: 100%;
+  position: relative;
+  /* By default on desktop, it acts as a tall map container */
+  min-height: calc(100vh - 80px); /* Adjust for header if needed */
+  overflow: hidden; /* Hide overflow if map image is huge */
 }
 
 /* Full screen background map */
@@ -20,14 +29,17 @@
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
-  /* Default to desktop bg */
+  /* Desktop Background */
   background-image: var(--desktop-bg);
+  /* Gradient fade at bottom to blend with #9AB261 */
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 .village-sign {
   position: relative;
   z-index: 10;
-  background-color: rgba(255, 222, 173, 0.9); /* slight opacity */
+  background-color: rgba(255, 222, 173, 0.9);
   max-width: 500px;
   margin: 2rem auto;
   transform: rotate(-1deg);
@@ -52,7 +64,8 @@
   width: 100%;
   height: 100%;
   z-index: 5;
-  pointer-events: none; /* Let clicks pass through empty space */
+  /* Look-through click on desktop */
+  pointer-events: none; 
 }
 
 /* Common style for the house buttons/labels */
@@ -61,6 +74,7 @@
   pointer-events: auto;
   text-decoration: none;
   transition: transform 0.2s;
+  /* On desktop, icon is hidden, just label/button box is visible */
 }
 
 .house-link:hover {
@@ -80,21 +94,28 @@
   white-space: nowrap;
 }
 
+/* Default: Hide icons on desktop */
+.mobile-house-icon {
+  display: none;
+}
 
+/* 
+   Positioning - Desktop (Absolute)
+   Tweaked based on previous successes
+*/
 
 /* Nestly (Housing) - Left */
 .pos-nestly {
-  top: 40%; /* Moved up slightly */
-  left: 35%; /* Moved slightly right */
+  top: 40%;
+  left: 35%;
 }
 
 /* Whisk (Bakery) - Center */
 .pos-whisk {
-  top: 48%; /* Moved up */
+  top: 48%;
   left: 50%;
   transform: translateX(-50%);
 }
-
 .pos-whisk:hover {
   transform: translateX(-50%) scale(1.1);
 }
@@ -102,17 +123,24 @@
 /* PetSitHub (Kennel) - Right */
 .pos-petsit {
   top: 58%;
-  left: 62%; /* Positioned explicitly from left to match symmetry */
+  left: 62%;
 }
 
-/* Mobile Responsive Styles */
+/* === Mobile Responsive Styles === */
 @media (max-width: 768px) {
-  .village-map-background {
-    background-image: var(--mobile-bg);
-    background-size: repeat; /* Tile the grass texture if needed */
+  .hero-section {
+    /* Allow it to grow naturally with content */
+    min-height: auto;
+    padding-bottom: 3rem;
   }
 
-  /* Make the map interactables a flex column list */
+  .village-map-background {
+    /* Switch to texture */
+    background-image: var(--mobile-bg);
+    background-size: repeat; /* Tile the grass */
+  }
+
+  /* Flex Layout for list */
   .map-interactables {
     position: relative;
     display: flex;
@@ -122,13 +150,28 @@
     gap: 2rem;
     padding-top: 2rem;
     pointer-events: auto;
+    height: auto;
   }
 
   .house-link {
-    position: static; /* Remove absolute positioning */
+    position: static; /* Remove absolute */
     transform: none;
-    width: 80%;
-    max-width: 300px;
+    width: 90%;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* Show icon on mobile */
+  .mobile-house-icon {
+    display: block;
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));
   }
 
   .pos-whisk {
@@ -143,7 +186,8 @@
     text-align: center;
     padding: 1rem;
     font-size: 2rem;
-    width: 100%;
+    flex-grow: 1; /* Make button fill remaining space */
+    width: auto;
   }
 
   .village-sign {
@@ -154,8 +198,14 @@
 
 /* Top 5 marketplace section */
 .top-section {
-  margin-top: 3rem;
+  /* This sits below the hero section */
+  position: relative; 
+  z-index: 2;
+  margin-top: 0; /* Removing negative margin if any */
   padding: 2rem 1.5rem 4rem;
+  /* Ensure background color is visible/consistent if needed, 
+     or transparent to show body/container bg */
+  background-color: rgba(255, 255, 255, 0.1); 
 }
 
 .top-title {
