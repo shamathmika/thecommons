@@ -8,11 +8,23 @@ header('Content-Type: application/json; charset=utf-8');
 // 1) Try to call the real Whisk API on wendynttn.com
 $remoteUrl = 'https://wendynttn.com/backend/whisk/products/list.php';
 
-// Use file_get_contents like Nestly for simplicity
-$response = @file_get_contents($remoteUrl);
+// Create a stream context with a User-Agent to avoid being blocked on shared hosting
+$options = [
+    'http' => [
+        'method' => 'GET',
+        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n",
+        'timeout' => 10,
+        'ignore_errors' => true
+    ],
+    'ssl' => [
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+    ]
+];
+$context = stream_context_create($options);
+$response = @file_get_contents($remoteUrl, false, $context);
 
 $data = null;
-
 if ($response !== false) {
     $decoded = json_decode($response, true);
     if (is_array($decoded) && count($decoded) > 0) {
