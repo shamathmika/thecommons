@@ -56,7 +56,12 @@ function Home() {
   }, []);
 
   return (
-    <div className="home-container">
+    <div
+      className="home-container"
+      style={{
+        '--grass-tiling': `url(${greenGrass})`,
+      }}
+    >
       
       {/* Hero Section: Map (Desktop) / List (Mobile) */}
       <div className="hero-section">
