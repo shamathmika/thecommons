@@ -1,0 +1,169 @@
+/* frontend/src/styles/ProductDetail.css */
+
+.product-detail-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 900px) {
+  .product-detail-container {
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    align-items: start;
+  }
+}
+
+/* === LEFT COLUMN: Product Info === */
+.product-info-card {
+  background-color: var(--paper-bg);
+  padding: 2rem;
+  border: 4px solid var(--wood-dark);
+  box-shadow: var(--pixel-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pd-header {
+  border-bottom: 2px dashed var(--wood-dark);
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+.pd-title {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--wood-dark);
+  line-height: 1.2;
+}
+
+.pd-company-tag {
+  background-color: var(--wood-light);
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-family: var(--pixel-font);
+}
+
+.pd-image-wrapper {
+  background-color: #fff;
+  border: 4px solid var(--wood-dark);
+  padding: 1rem;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.pd-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  image-rendering: pixelated; /* Enforce pixel look */
+}
+
+.pd-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255,255,255,0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}
+
+.pd-price {
+  font-size: 2rem;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.pd-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Pixel Star SVG styling */
+.pixel-star {
+  /* Size controlled inline or by wrapper, but ensure fill is respected */
+  display: block;
+}
+
+/* === RIGHT COLUMN: Reviews === */
+.reviews-card {
+  background-color: var(--paper-bg); /* Match the left card */
+  padding: 2rem;
+  border: 4px solid var(--wood-dark);
+  box-shadow: var(--pixel-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  /* Removed max-height and overflow to allow page scroll */
+}
+
+.reviews-header {
+  font-size: 1.8rem;
+  margin: 0;
+  border-bottom: 2px solid var(--wood-light);
+  padding-bottom: 0.5rem;
+  color: var(--wood-dark);
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.review-item {
+  background-color: rgba(255, 255, 255, 0.5); /* Slightly lighter than paper bg */
+  padding: 1rem;
+  border: 2px solid var(--wood-light);
+  border-radius: 4px;
+  position: relative;
+}
+
+.review-author {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: #666;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.review-text {
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.add-review-box {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 1.5rem;
+  text-align: center;
+  border: 2px dashed var(--wood-dark);
+  margin-bottom: 1rem; /* Spacing below since it's now on top */
+}
+
+.login-prompt {
+  font-size: 1.1rem;
+  color: var(--wood-dark);
+}
+
+.login-link {
+  color: var(--wood-light);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: bold;
+}

@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import Nestly from "./pages/Nestly";
 import Whisk from "./pages/Whisk";
-import WhiskDetail from "./pages/WhiskDetail";
+import ProductDetail from "./pages/ProductDetail";
 
 import "./styles/global.css";
 import "./styles/Home.css";
@@ -157,9 +157,10 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             <Route path="/nestly" element={<Nestly />} />
+            <Route path="/nestly/:id" element={<ProductDetail />} />
 
             <Route path="/whisk" element={<Whisk />} />
-            <Route path="/whisk/:id" element={<WhiskDetail />} />
+            <Route path="/whisk/:id" element={<ProductDetail />} />
 
             <Route
               path="/petsit"

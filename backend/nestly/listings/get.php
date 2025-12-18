@@ -31,15 +31,34 @@ if (!is_array($rawListings)) {
 // 3. Transform each Nestly listing into the unified marketplace format
 $products = [];
 
+// Prepare statement for fetching local visits
+require_once __DIR__ . '/../../common/db.php';
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM visits WHERE product_id = ?");
+
 foreach ($rawListings as $listing) {
+    $pid = "N" . $listing["id"]; // Construct product ID for local lookup
+
+    // Get local visit count
+    $localVisits = 0;
+    $debugErr = null;
+    try {
+        $stmt->execute([$pid]);
+        $localVisits = (int) $stmt->fetchColumn();
+        $stmt->closeCursor(); // Ensure cursor is closed for next iteration
+    } catch (Exception $e) {
+        $localVisits = 0;
+        $debugErr = $e->getMessage();
+    }
+
     $products[] = [
-        "id" => "N" . $listing["id"],                   // e.g. N1, N2...
+        "id" => $pid,                   // e.g. N1, N2...
         "company" => "nestly",
         "name" => $listing["title"] ?? "",
+        "debug_error" => $debugErr, // TEMPORARY DEBUG
         "type" => "rental",
         "price" => isset($listing["rent"]) ? (float) $listing["rent"] : null,
         "rating" => isset($listing["avg_rating"]) ? (float) $listing["avg_rating"] : 0,
-        "visits" => isset($listing["visits"]) ? (int) $listing["visits"] : 0,
+        "visits" => $localVisits, // Use our local count
         "image" => $listing["image_url"] ?? null,
         "description" => $listing["description"] ?? "",
     ];

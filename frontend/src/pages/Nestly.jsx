@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
 const apiBase = import.meta.env.VITE_API_BASE || "/backend";
@@ -54,7 +55,13 @@ export default function Nestly() {
         }}
       >
         {products.map((p) => (
-          <ProductCard key={p.id} product={p} />
+          <Link
+            key={p.id}
+            to={`/nestly/${encodeURIComponent(p.id)}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ProductCard product={p} />
+          </Link>
         ))}
       </div>
     </div>
